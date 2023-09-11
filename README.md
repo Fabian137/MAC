@@ -22,7 +22,7 @@ Casi urgentes
 
 ##### <mark style="background: #ABF7F7A6;">Matemáticas Discretas</mark>
 - [x] Skills Build (Sesión 2) **05 - Septiembre - 2023**
-- [] Skills Build (Act 2) **10 - Septiembre - 2023**
+- [x] Skills Build (Act 2) **10 - Septiembre - 2023**
 - [] Skills Build (Act 3) **11 - Septiembre - 2023**
 - [] Skills Build (Act 4) **12 - Septiembre - 2023**
 - []
