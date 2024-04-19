@@ -28,3 +28,26 @@ h1{
 h2{
     color: #a8a1fc;
 }
+
+
+
+/* NODOS------------------------------------------------------------------------ */
+
+.circle {
+    width: 3rem;
+    height: 3rem;
+    background-color: #8732fd;
+    border-radius: 50%; /* This makes the element round */
+}
+
+
+
+
+
+
+/* NODOS------------------------------------------------------------------------ */
+
+.display-b{
+    display: flex;
+    justify-content: space-between;
+}
