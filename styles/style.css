@@ -51,3 +51,22 @@ h2{
     display: flex;
     justify-content: space-between;
 }
+
+.separador{
+    margin: 2rem 0;
+}
+
+.btn-primary{
+    background-color: #8732fd;
+    border-color: #a05cff;
+}
+.btn:hover {
+    color: var(--bs-btn-hover-color);
+    background-color: #6714db;
+    border-color: #34165e;
+}
+.btn:active {
+    color: var(--bs-btn-active-color);
+    background-color: #c97a13;
+    border-color: #ff6913;
+}

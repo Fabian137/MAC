@@ -1,25 +1,42 @@
 const inputNV = document.getElementById('nv');
+const inputNL = document.getElementById('nl');
+const selectElement = document.querySelector('.form-select');
+// const FALTA PARA LA RELACIÓN ENTRE VERTICES
+const boton = document.getElementById('btnTrigger');
 let verticesArray = []
-// Añadir un evento 'change' al input para detectar cuando cambia su valor
-inputNV.addEventListener('change', function() {
-    // Obtener el valor del input
-    const valorNV = inputNV.value;
+
+boton.addEventListener('click', function() {
+
     
-    // Mostrar el valor en la consola
-    console.log('Número de vértices:', valorNV);
-
-    for (let i = 0; i < valorNV; i++) {
-        verticesArray.push(i);
+    // Obtener el valor del input
+    // const valorNV = inputNV.value;
+    const valorNV = parseInt(inputNV.value);
+    const valorNL = parseInt(inputNL.value);
+    const valorSeleccionado = selectElement.value;
+    
+    if(isNaN(valorNV) || isNaN(valorNL)){
+        alert('Por favor ingresa valores válidos en los campos de número de vértices y número de líneas.');        
     }
+    else{
+        console.log('Número de vértices:', valorNV);
+        console.log('Número de líneas:', valorNL);
+        console.log('El valor seleccionado es:', valorSeleccionado);
+    }
+/* 
 
-    d3.select('.nodes')
-    .selectAll('.circle')
-    // .data(graphNode_example)
-    .data(verticesArray)
-    .enter()
-    .append('div')
-    .classed('circle', true);
-    // .text(dta => dta);
+for (let i = 0; i < valorNV; i++) {
+    verticesArray.push(i);
+}
+
+d3.select('.nodes')
+.selectAll('.circle')
+// .data(graphNode_example)
+.data(verticesArray)
+.enter()
+.append('div')
+.classed('circle', true);
+// .text(dta => dta);
+*/
 });
 
 
