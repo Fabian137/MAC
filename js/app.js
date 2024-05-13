@@ -5,6 +5,14 @@ const selectElement = document.querySelector('.form-select');
 const boton = document.getElementById('btnTrigger');
 let verticesArray = []
 
+
+
+
+
+
+
+
+
 boton.addEventListener('click', function() {
 
     
@@ -46,3 +54,32 @@ const graphNode_example =[
     {id:2, value:2}
 ]
 
+
+function accesibilidad(XG, n) {
+    let MG = new Array(n)
+    let potencia = new Array(n)
+
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            MG[i][j] = XG[i][j]; // Copiar el valor de XG en la posición correspondiente de MG
+            potencia[i][j] = XG[i][j];
+        }
+    }
+
+    for (let k = 2; k < n-2; k++) {
+        potencia = potencia * XG
+        MG = MG + potencia
+    }
+
+    console.log("La matriz de Accesibilidad es")
+    for (let i = 0; i < array.length; i++) {
+        for (let j = 0; j < array.length; j++) {
+            if (MG[i][j] == 0) {
+                console.log("0")
+            }else{
+                console.log("+")
+            }
+        }        
+    }
+
+}
