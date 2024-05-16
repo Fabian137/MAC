@@ -2,16 +2,70 @@ const inputNV = document.getElementById('nv');
 const inputNL = document.getElementById('nl');
 const selectElement = document.querySelector('.form-select');
 // const FALTA PARA LA RELACIÓN ENTRE VERTICES
+// cons inputRelation = document.getElementsByClassName()
+const inputsContainer = document.getElementById('inputsContainer');
 const boton = document.getElementById('btnTrigger');
 let verticesArray = []
 
 
+/*------------------------------- LECTURA DE DATOS  -------------------------------*/
+inputNL.addEventListener('input', function() {
+    const numLineas = parseInt(inputNL.value);
+    // Limpiar el contenedor de inputs antes de agregar nuevos
+    inputsContainer.innerHTML = '';
+    
+    // Generar los inputs dinámicamente
+    /*
+    for (let i = 0; i < numLineas * 2; i++) {
+        const divCol = document.createElement('div');
+        divCol.classList.add('col');
+        
+        const input = document.createElement('input');
+        input.type = 'text';
+        input.classList.add('form-control');
+        input.placeholder = 'Input ' + (i + 1);
+        divCol.appendChild(input);
+        
+        inputsContainer.appendChild(divCol);
+    }
+    */
+   for (let i = 1; i <= numLineas; i++) {
+       inputsContainer.innerHTML += `
+       <div class="row" style="margin-top:1rem;">
+       <div class="col">
+        <div class="form-label">e${i}</div>
+       </div>
+       <div class="col">
+       <input type="text" class="form-control salida" placeholder="Salida del nodo${i}" aria-label="First name">
+       </div>
+       <div class="col">
+       <input type="text" class="form-control entrada" placeholder="Llegada del nodo${i}" aria-label="Last name">
+       </div>
+       <br>
+       </div>
+       `
+    }
+});
 
 
+function obtenerDatosInputs() {
+    const inputs = document.getElementsByClassName('salida');
+    const inpute = document.getElementsByClassName('entrada');
+    const salida = [];
+    const entrada = []
+    for (let in1 of inputs) {
+        salida.push(in1.value);
+    }
+    for (let in2 of inpute) {
+        entrada.push(in2.value);
+    }
+
+    console.log("entrada" + entrada);
+    console.log(salida);
+}
 
 
-
-
+/* ------------------------------- VALIDACION -------------------------------*/
 
 boton.addEventListener('click', function() {
 
@@ -29,6 +83,7 @@ boton.addEventListener('click', function() {
         console.log('Número de vértices:', valorNV);
         console.log('Número de líneas:', valorNL);
         console.log('El valor seleccionado es:', valorSeleccionado);
+        obtenerDatosInputs(valorNL);
     }
 /* 
 
@@ -55,6 +110,9 @@ const graphNode_example =[
 ]
 
 
+
+
+/* ------------------------------- MATRIZ DE ACCESIBILIDAD -------------------------------*/
 function accesibilidad(XG, n) {
     let MG = new Array(n)
     let potencia = new Array(n)
