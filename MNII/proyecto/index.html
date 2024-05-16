@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>extrapolación y YouTube</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="assets/styles/style.css">
+
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mathjs/lib/browser/math.js"></script>
+    <style>
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 style="font-weight: 800; margin: 4rem 0;">Interpolación de Splines Cúbicos</h1>
+        <!-- <div class="form-group">
+            <label for="xValues">Valores de X (separados por comas):</label>
+            <input type="text" id="xValues" value="12, 13, 14, 15, 16, 17, 18, 19, 20, 21">
+        </div>
+        <div class="form-group">
+            <label for="yValues">Valores de Y (separados por comas):</label>
+            <input type="text" id="yValues" value="37220, 33198, 33943, 36313, 38309, 37689, 37912, 40009, 38641, 38322">
+        </div>
+        <div class="form-group">
+            <label for="xExtrapolate">Valor de X para extrapolación:</label>
+            <input type="number" id="xExtrapolate" value="22">
+        </div> --> 
+        <!-- <form> -->
+            <div class="row mb-3">
+              <label for="inputEmail3" class="col-sm-2 col-form-label">Valores de X (separados por comas):</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="text" id="xValues" value="12, 13, 14, 15, 16, 17, 18, 19, 20, 21">
+              </div>
+            </div>
+            <div class="row mb-3">
+              <label for="inputPassword3" class="col-sm-2 col-form-label">Valores de Y (separados por comas):</label>
+              <div class="col-sm-10">
+                <input class="form-control" type="text" id="yValues" value="37220, 33198, 33943, 36313, 38309, 37689, 37912, 40009, 38641, 38322">
+              </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputPassword3" class="col-sm-2 col-form-label">Valor de X para extrapolación:</label>
+                <div class="col-sm-10">
+                  <input class="form-control" type="number" id="xExtrapolate" value="22">
+                </div>
+              </div>
+          <!-- </form> -->
+
+        <button onclick="drawSpline()"type="button" class="btn btn-primary">Generar Gráfico</button>
+        <!-- <button onclick="drawPolynomialRegression()">Generar Gráfico</button> -->
+        <div id="plot"></div>
+    </div>
+    <script src="assets/js/splines.js"></script>
+    <script src="assets/js/polRegression.js"></script>
+</body>
+</html>
