@@ -2,9 +2,16 @@
 # Extrapolación y Youtube
 La aplicación final se encuentra en la página [Web App](https://audi-mac-e.netlify.app/)
 
+## Integrantes
+- Beltrán Isidro Carlos Fabián
+- Díaz Valdez Fidel Gilberto
+- Rodarte Rosales Jesús Eduardo
+
 ## Guía de uso
 
-![[README-20240516120237367.webp]]
+<!-- ![[README-20240516120237367.webp]] -->
+
+![webapp](Referencias-Anexos/README-20240516120237367.webp)
 
 Veremos tres inputs los cuales ya tienen datos (que fueron usado en el proyecto) pero también podemos ingresar los que nosotros querramos, tomando en cuenta que los valores se ingresan separador por comas
 1. El primer input hace referencia a los días de abril: $x$
