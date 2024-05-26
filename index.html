@@ -31,13 +31,13 @@
             <div class="row mb-3">
                 <label for="colFormLabel" class="col-sm-2 col-form-label">Número de Líneas</label>
                 <div class="col-sm-10">
-                    <input type="number" class="form-control" id="nl" placeholder="" required>
+                    <input type="number" class="form-control" id="nl" placeholder="" min="0" required>
                 </div>
             </div>
             <div class="row mb-3">
                 <label for="colFormLabel" class="col-sm-2 col-form-label">Tipo de gráfica</label>
                 <div class="col-sm-10">
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select tipoGraph" aria-label="Default select example">
                         <option selected value="0">Dirigida</option>
                         <option value="1">No Dirigida</option>
                     </select>
@@ -54,10 +54,12 @@
                 </div>
             -->
 
-            <section id="inputsContainer">
-                <!-- <div class="row"> -->
-                    <!-- Los inputs dinámicos se generarán aquí -->
-                <!-- </div> -->
+            <div class="row justify-content-around">
+                <span class="col-3">Linea</span>
+                <span class="col-3">Sale</span>
+                <span class="col-3">Llega</span>
+            </div>
+            <section id="inputsContainer" class="separador">
             </section>
 
             <div class="separador"></div>
@@ -69,6 +71,9 @@
             <div class="nodes display-b"></div>
         </section>
         
+        <svg width="600" height="400"></svg>
+        
+
         
         <script src="js/app.js"></script>
         <!-- <script src="js/melFile.js"></script> -->

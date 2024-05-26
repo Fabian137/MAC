@@ -41,7 +41,16 @@ h2{
 }
 
 
+.link {
+    fill: none;
+    stroke: #999;
+    stroke-opacity: 0.6;
+}
 
+.node {
+    fill: #7e41b8;
+    stroke: #fff;
+}
 
 
 

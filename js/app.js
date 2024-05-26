@@ -1,53 +1,74 @@
 const inputNV = document.getElementById('nv');
 const inputNL = document.getElementById('nl');
-const selectElement = document.querySelector('.form-select');
-// const FALTA PARA LA RELACIÓN ENTRE VERTICES
-// cons inputRelation = document.getElementsByClassName()
+const selectElement = document.querySelector('.tipoGraph');
 const inputsContainer = document.getElementById('inputsContainer');
 const boton = document.getElementById('btnTrigger');
-let verticesArray = []
+let verticesArray = [];
 
+// Event listener para actualizar la cantidad de líneas y selects
+inputNV.addEventListener('input', optionsCreateUpdate)
+inputNL.addEventListener('input', optionsCreateUpdate)
 
-/*------------------------------- LECTURA DE DATOS  -------------------------------*/
-inputNL.addEventListener('input', function() {
+function optionsCreateUpdate() {
+        
     const numLineas = parseInt(inputNL.value);
+    const numVertices = parseInt(inputNV.value); // Obtener el valor actualizado de numVertices
+    
     // Limpiar el contenedor de inputs antes de agregar nuevos
     inputsContainer.innerHTML = '';
     
-    // Generar los inputs dinámicamente
-    /*
-    for (let i = 0; i < numLineas * 2; i++) {
-        const divCol = document.createElement('div');
-        divCol.classList.add('col');
+    for (let i = 1; i <= numLineas; i++) {
+        // Crear contenedor de la fila
+        const rowDiv = document.createElement('div');
+        rowDiv.className = 'row justify-content-around';
+        rowDiv.style.marginTop = '1rem';
         
-        const input = document.createElement('input');
-        input.type = 'text';
-        input.classList.add('form-control');
-        input.placeholder = 'Input ' + (i + 1);
-        divCol.appendChild(input);
+        // Crear columna para la etiqueta
+        const colDiv = document.createElement('div');
+        colDiv.className = 'col-3';
         
-        inputsContainer.appendChild(divCol);
+        // Crear etiqueta
+        const label = document.createElement('div');
+        label.className = 'form-label';
+        label.textContent = `e${i}`;
+        colDiv.appendChild(label);
+        
+        // Crear el primer elemento select
+        const select1 = document.createElement('select');
+        select1.className = 'col-3 form-select nodoNl salida';
+        select1.style.width = '25%';
+        select1.setAttribute('aria-label', 'Default select example');
+        
+        // Crear el segundo elemento select
+        const select2 = document.createElement('select');
+        select2.className = 'col-3 form-select nodoNl entrada';
+        select2.style.width = '25%';
+        select2.setAttribute('aria-label', 'Default select example');
+        
+        
+        
+        // Crear y añadir las opciones a ambos selects
+        for (let j = 1; j <= numVertices; j++) {
+            const option1 = document.createElement('option');
+            option1.value = j;
+            option1.textContent = j;
+            select1.appendChild(option1);
+            
+            const option2 = document.createElement('option');
+            option2.value = j;
+            option2.textContent = j;
+            select2.appendChild(option2);
+        }
+        
+        // Añadir la columna y los selects al contenedor de la fila
+        rowDiv.appendChild(colDiv);
+        rowDiv.appendChild(select1);
+        rowDiv.appendChild(select2);
+        
+        // Añadir la fila al contenedor principal
+        inputsContainer.appendChild(rowDiv);
     }
-    */
-   for (let i = 1; i <= numLineas; i++) {
-       inputsContainer.innerHTML += `
-       <div class="row" style="margin-top:1rem;">
-       <div class="col">
-        <div class="form-label">e${i}</div>
-       </div>
-       <div class="col">
-       <input type="text" class="form-control salida" placeholder="Salida del nodo${i}" aria-label="First name">
-       </div>
-       <div class="col">
-       <input type="text" class="form-control entrada" placeholder="Llegada del nodo${i}" aria-label="Last name">
-       </div>
-       <br>
-       </div>
-       `
-    }
-});
-
-
+}
 function obtenerDatosInputs() {
     const inputs = document.getElementsByClassName('salida');
     const inpute = document.getElementsByClassName('entrada');
