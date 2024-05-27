@@ -96,7 +96,32 @@ function bucles(Sale, Llega, e) {
         }
     }
 }
-/* ------------------------------- -------------------------------*/ 
+/* ------------------------------- -------------------------------*/
+
+function Adyacencia(Sale, Llega, e, n, Dirigida) {
+    // Crear matriz XG[n][n] e inicializar con ceros
+    let XG = Array.from({ length: n }, () => Array(n).fill(0));
+
+    // Llenar la matriz XG con las conexiones
+    for (let i = 0; i < e; i++) {
+        XG[Sale[i] - 1][Llega[i] - 1] = 1; // Sale[i] a Llega[i]
+        if (!Dirigida) {
+            XG[Llega[i] - 1][Sale[i] - 1] = 1; // Llega[i] a Sale[i] si no es dirigida
+        }
+    }
+
+    // Mostrar la matriz de adyacencia
+    console.log("La matriz de Adyacencia es:");
+    for (let i = 0; i < n; i++) {
+        let row = '';
+        for (let j = 0; j < n; j++) {
+            row += XG[i][j] + ' ';
+        }
+        console.log(row);
+    }
+
+    return XG;
+}
 
 /* ------------------------------- VALIDACION -------------------------------*/
 
@@ -120,6 +145,15 @@ boton.addEventListener('click', function() {
         const Sale = datos.Sale;
         const Llega = datos.Llega;
         bucles(Sale, Llega, valorNL);
+
+                
+        // Determinar si el grafo es dirigido
+        const Dirigida = valorSeleccionado === 'Dirigida';
+        
+        // Llamar a la función Adyacencia
+        const XG = Adyacencia(Sale, Llega, valorNL, valorNV, Dirigida);
+        
+        // Puedes hacer más cosas con la matriz XG aquí si es necesario
     }
 /* 
 
