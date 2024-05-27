@@ -96,7 +96,7 @@ function bucles(Sale, Llega, e) {
         }
     }
 }
-/* ------------------------------- -------------------------------*/
+/* ------------------------------- Matriz de Adyacencia-------------------------------*/
 
 function Adyacencia(Sale, Llega, e, n, Dirigida) {
     // Crear matriz XG[n][n] e inicializar con ceros
@@ -154,6 +154,8 @@ boton.addEventListener('click', function() {
         const XG = Adyacencia(Sale, Llega, valorNL, valorNV, Dirigida);
         
         // Puedes hacer más cosas con la matriz XG aquí si es necesario
+
+        const AG = Accesibilidad(XG, valorNV); 
     }
 /* 
 
@@ -180,25 +182,23 @@ const graphNode_example =[
 ]
 
 
-
-
-/* ------------------------------- MATRIZ DE ACCESIBILIDAD -------------------------------*/
+/* ------------------------------- MATRIZ DE ACCESIBILIDAD -------------------------------
 function accesibilidad(XG, n) {
     let MG = new Array(n)
     let potencia = new Array(n)
-
+    
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
             MG[i][j] = XG[i][j]; // Copiar el valor de XG en la posición correspondiente de MG
             potencia[i][j] = XG[i][j];
         }
     }
-
+    
     for (let k = 2; k < n-2; k++) {
         potencia = potencia * XG
         MG = MG + potencia
     }
-
+    
     console.log("La matriz de Accesibilidad es")
     for (let i = 0; i < array.length; i++) {
         for (let j = 0; j < array.length; j++) {
@@ -209,5 +209,64 @@ function accesibilidad(XG, n) {
             }
         }        
     }
+    
+}
 
+*/
+
+
+function Accesibilidad(XG, n) {
+    // Crear matrices MG y Potencia de tamaño n x n e inicializarlas
+    let MG = Array.from({ length: n }, () => Array(n).fill(0));
+    let Potencia = Array.from({ length: n }, () => Array(n).fill(0));
+
+    // Copiar los valores de XG en MG y Potencia
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            MG[i][j] = XG[i][j];
+            Potencia[i][j] = XG[i][j];
+        }
+    }
+
+    // Calcular las potencias y acumular en MG
+    for (let k = 2; k <= n-1; k++) {
+        Potencia = multiplicarMatrices(Potencia, XG, n);
+        MG = sumarMatrices(MG, Potencia, n);
+    }
+
+    // Mostrar la matriz de accesibilidad
+    console.log("La matriz de Accesibilidad es:");
+    for (let i = 0; i < n; i++) {
+        let row = '';
+        for (let j = 0; j < n; j++) {
+            row += (MG[i][j] === 0 ? '0' : '+') + ' ';
+        }
+        console.log(row);
+    }
+
+    return MG;
+}
+
+// Función para multiplicar dos matrices
+function multiplicarMatrices(A, B, n) {
+    let resultado = Array.from({ length: n }, () => Array(n).fill(0));
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            for (let k = 0; k < n; k++) {
+                resultado[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+    return resultado;
+}
+
+// Función para sumar dos matrices
+function sumarMatrices(A, B, n) {
+    let resultado = Array.from({ length: n }, () => Array(n).fill(0));
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            resultado[i][j] = A[i][j] + B[i][j];
+        }
+    }
+    return resultado;
 }
