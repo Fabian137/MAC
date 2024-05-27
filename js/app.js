@@ -1,3 +1,4 @@
+
 const inputNV = document.getElementById('nv');
 const inputNL = document.getElementById('nl');
 const selectElement = document.querySelector('.tipoGraph');
@@ -70,21 +71,32 @@ function optionsCreateUpdate() {
     }
 }
 function obtenerDatosInputs() {
-    const inputs = document.getElementsByClassName('salida');
-    const inpute = document.getElementsByClassName('entrada');
-    const salida = [];
-    const entrada = []
+    const inputs = document.getElementsByClassName('salida');   //--------------------- Sale 
+    const inpute = document.getElementsByClassName('entrada');  //--------------------- Llega 
+    const Sale = [];
+    const Llega = [];
     for (let in1 of inputs) {
-        salida.push(in1.value);
+        Sale.push(parseInt(in1.value));
     }
     for (let in2 of inpute) {
-        entrada.push(in2.value);
+        Llega.push(parseInt(in2.value));
     }
 
-    console.log("entrada" + entrada);
-    console.log(salida);
+    console.log("entrada:", Llega);
+    console.log("salida:", Sale);
+
+    return { Sale, Llega };
 }
 
+/* ------------------------------- Bucles función -------------------------------*/ 
+function bucles(Sale, Llega, e) {
+    for (let i = 0; i < e; i++) {
+        if (Sale[i] === Llega[i]) {
+            console.log(`La línea ${i + 1} es un bucle en el nodo ${Sale[i]}`);
+        }
+    }
+}
+/* ------------------------------- -------------------------------*/ 
 
 /* ------------------------------- VALIDACION -------------------------------*/
 
@@ -104,7 +116,10 @@ boton.addEventListener('click', function() {
         console.log('Número de vértices:', valorNV);
         console.log('Número de líneas:', valorNL);
         console.log('El valor seleccionado es:', valorSeleccionado);
-        obtenerDatosInputs(valorNL);
+        const datos = obtenerDatosInputs();
+        const Sale = datos.Sale;
+        const Llega = datos.Llega;
+        bucles(Sale, Llega, valorNL);
     }
 /* 
 
