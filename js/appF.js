@@ -70,7 +70,6 @@ function optionsCreateUpdate() {
         inputsContainer.appendChild(rowDiv);
     }
 }
-/* ------------------------------- LECTURA DE DATOS -------------------------------*/
 function obtenerDatosInputs() {
     const inputs = document.getElementsByClassName('salida');   //--------------------- Sale 
     const inpute = document.getElementsByClassName('entrada');  //--------------------- Llega 
@@ -431,108 +430,76 @@ function clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, n, diri
 }
 
 
-
-
-
-function Incidencia(Sale, Llega) {
-    const numLineas = parseInt(inputNL.value);
-    const numVertices = parseInt(inputNV.value);
-    let Dirigida = selectElement.value === "0"; // Asegurarse de que sea un booleano
-
-    // Inicializar AG como una matriz bidimensional
-    const AG = Array.from({ length: numVertices }, () => Array(numLineas).fill(0));
-
-    // Corregir los bucles para que empiecen en 0
-    for (let i = 0; i < numLineas; i++) {
-        AG[Sale[i] - 1][i] = 1; // Restar 1 para ajustar el índice del vértice
-        if (Dirigida) {
-            AG[Llega[i] - 1][i] = -1; // Restar 1 para ajustar el índice del vértice
-        } else {
-            AG[Llega[i] - 1][i] = 1; // Restar 1 para ajustar el índice del vértice
-        }
-    }
-
-    console.log("La matriz de incidencia es:");
-    for (let i = 0; i < numVertices; i++) {
-        console.log(AG[i].join(" "));
-    }
-
-    return AG;
-}
-
 /* ------------------------------- VALIDACION -------------------------------*/
-function dataParams_Validation() {
-    let Dirigida = selectElement.value;
-    const numLineas = parseInt(inputNL.value);
-    const numVertices = parseInt(inputNV.value); // Obtener el valor actualizado de numVertices
-    if (isNaN(numLineas) || isNaN(numVertices)) {
-        alert('Por favor ingresa valores válidos en los campos de número de vértices y número de líneas.');
-    } else {
-        console.log('Número de vértices:', numVertices);
-        console.log('Número de líneas:', numLineas);
-        console.log('El valor seleccionado es:', Dirigida);
+
+boton.addEventListener('click', function() {
+
+    
+    // Obtener el valor del input
+    // const valorNV = inputNV.value;
+    const valorNV = parseInt(inputNV.value);
+    const valorNL = parseInt(inputNL.value);
+    const valorSeleccionado = selectElement.value;
+    
+    if(isNaN(valorNV) || isNaN(valorNL)){
+        alert('Por favor ingresa valores válidos en los campos de número de vértices y número de líneas.');        
     }
-}
+    else{
+        console.log('Número de vértices:', valorNV);
+        console.log('Número de líneas:', valorNL);
+        console.log('El valor seleccionado es:', valorSeleccionado);
+        const datos = obtenerDatosInputs();
+        const Sale = datos.Sale;
+        const Llega = datos.Llega;
+        
+        const existeBucle = bucles(Sale, Llega, valorNL);
+        console.log("Existe al menos un bucle:", existeBucle);
 
+        // Determinar si el grafo es dirigido
+        let Dirigida = selectElement.value === "0"; // Asegurarse de que sea un booleano 
 
-function multipleFunctions() {
-    console.log('Número de vértices:', valorNV);
-    console.log('Número de líneas:', valorNL);
-    console.log('El valor seleccionado es:', valorSeleccionado);
-    const datos = obtenerDatosInputs();
-    const Sale = datos.Sale;
-    const Llega = datos.Llega;
-    
-    const existeBucle = bucles(Sale, Llega, valorNL);
-    console.log("Existe al menos un bucle:", existeBucle);
+        const AG  = Incidencia(Sale, Llega); 
+        
+        // Llamar a la función Adyacencia
+        const XG = Adyacencia(Sale, Llega, valorNL, valorNV, Dirigida);
+        
+        // Puedes hacer más cosas con la matriz XG aquí si es necesario
 
-    // Determinar si el grafo es dirigido
-    let Dirigida = selectElement.value === "0"; // Asegurarse de que sea un booleano 
+        const MG = Accesibilidad(XG, valorNV); 
 
-    const AG  = Incidencia(Sale, Llega); 
-    
-    // Llamar a la función Adyacencia
-    const XG = Adyacencia(Sale, Llega, valorNL, valorNV, Dirigida);
-    
-    // Puedes hacer más cosas con la matriz XG aquí si es necesario
+        const resultadoParalelas = LineasParalelas(Sale, Llega, valorNL, Dirigida);
+        console.log("Resultado de LineasParalelas:", resultadoParalelas);
 
-    const MG = Accesibilidad(XG, valorNV); 
+        // En esSimple se guarda el valor booleano sobre si es simple o no.
+        const esSimple = GraficaSimple(Sale, Llega, resultadoParalelas.NumeroParalelas, existeBucle);
 
-    const resultadoParalelas = LineasParalelas(Sale, Llega, valorNL, Dirigida);
-    console.log("Resultado de LineasParalelas:", resultadoParalelas);
+        // Llamar a la función GraficaConectada
+        const esConectada = GraficaConectada(MG, valorNV);
 
-    // En esSimple se guarda el valor booleano sobre si es simple o no.
-    const esSimple = GraficaSimple(Sale, Llega, resultadoParalelas.NumeroParalelas, existeBucle);
+        // Llamar a la función GraficaCompleta
+        const esCompleta = GraficaCompleta(XG, esSimple, valorNV);
+        
+        // Llamar a la función Arbol
+        const esArbol = Arbol(esConectada, valorNL, valorNV, esSimple);
 
-    // Llamar a la función GraficaConectada
-    const esConectada = GraficaConectada(MG, valorNV);
+        // Llamar a la función GraficaSimetrica
+        const esSimetrica = GraficaSimetrica(XG, valorNV, resultadoParalelas.NumeroParalelas, Dirigida);
 
-    // Llamar a la función GraficaCompleta
-    const esCompleta = GraficaCompleta(XG, esSimple, valorNV);
-    
-    // Llamar a la función Arbol
-    const esArbol = Arbol(esConectada, valorNL, valorNV, esSimple);
-
-    // Llamar a la función GraficaSimetrica
-    const esSimetrica = GraficaSimetrica(XG, valorNV, resultadoParalelas.NumeroParalelas, Dirigida);
-
-    const result = calcularGradoNodos(AG, valorNV, valorNL, Dirigida);                        //v. CalcularGradoNodos
-    console.log(result);
+        const result = calcularGradoNodos(AG, valorNV, valorNL, Dirigida);                        //v. CalcularGradoNodos
+        console.log(result);
 
 //        const clasNod = clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos 
-    clasificarNodos(result.grado, result.gradoInterno, result.gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos
+        clasificarNodos(result.grado, result.gradoInterno, result.gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos
+    }
 
-    // graphCreation(Sale, Llega)
-}
+});
 
 
 
-//--------------------- Ejecuta multipleFunctions
-boton.addEventListener('click', multipleFunctions );
-
-    // else{
-    // }
-// });
+const graphNode_example =[
+    {id:1, value:4},
+    {id:2, value:2}
+]
 
 
 // Función para multiplicar dos matrices
