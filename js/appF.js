@@ -4,7 +4,7 @@ const inputNL = document.getElementById('nl');
 const selectElement = document.querySelector('.tipoGraph');
 const inputsContainer = document.getElementById('inputsContainer');
 const boton = document.getElementById('btnTrigger');
-let verticesArray = [];
+// let verticesArray = [];
 
 // Event listener para actualizar la cantidad de líneas y selects
 inputNV.addEventListener('input', optionsCreateUpdate)
@@ -70,6 +70,7 @@ function optionsCreateUpdate() {
         inputsContainer.appendChild(rowDiv);
     }
 }
+/* ------------------------------- LECTURA DE DATOS -------------------------------*/
 function obtenerDatosInputs() {
     const inputs = document.getElementsByClassName('salida');   //--------------------- Sale 
     const inpute = document.getElementsByClassName('entrada');  //--------------------- Llega 
@@ -100,6 +101,35 @@ function bucles(Sale, Llega, e) {
     return existeBucle; 
 }
 /* ------------------------------- Matriz de Incidencia -------------------------------*/
+
+/*
+function Incidencia(Sale, Llega) {
+    const numLineas = parseInt(inputNL.value);
+    const numVertices = parseInt(inputNV.value);
+    let Dirigida = selectElement.value === "0"; // Asegurarse de que sea un booleano
+    
+    // Inicializar AG como una matriz bidimensional
+    const AG = Array.from({ length: numVertices }, () => Array(numLineas).fill(0));
+    
+    // Corregir los bucles para que empiecen en 0
+    for (let i = 0; i < numLineas; i++) {
+        AG[Sale[i] - 1][i] = 1; // Restar 1 para ajustar el índice del vértice
+        if (Dirigida) {
+            AG[Llega[i] - 1][i] = -1; // Restar 1 para ajustar el índice del vértice
+        } else {
+            AG[Llega[i] - 1][i] = 1; // Restar 1 para ajustar el índice del vértice
+        }
+    }
+    
+    console.log("La matriz de incidencia es:");
+    for (let i = 0; i < numVertices; i++) {
+        console.log(AG[i].join(" "));
+    }
+    
+    return AG;
+}
+*/
+
 function Incidencia(Sale, Llega) {
     const numLineas = parseInt(inputNL.value);
     const numVertices = parseInt(inputNV.value);
@@ -125,6 +155,7 @@ function Incidencia(Sale, Llega) {
 
     return AG;
 }
+
 /* ------------------------------- Matriz de Adyacencia-------------------------------*/
 
 function Adyacencia(Sale, Llega, e, n, Dirigida) {
@@ -233,6 +264,7 @@ function LineasParalelas(Sale, Llega, e, Dirigida) {
 }
 /* ------------------------------- Gráfica simple o general -------------------------------*/
 function GraficaSimple(Sale, Llega, NumeroParalelas, existeBucle) {
+    let simGen = document.getElementById('simGen');
     let Simple = true;
 
     // Verificar si hay más de un grupo de paralelas
@@ -247,9 +279,11 @@ function GraficaSimple(Sale, Llega, NumeroParalelas, existeBucle) {
 
     // Imprimir si la gráfica es simple o general
     if (Simple) {
+        simGen.innerHTML = 'La gráfica es simple';
         console.log("La gráfica es simple");
     } else {
         console.log("La gráfica es general");
+        simGen.innerHTML = 'La gráfica es general';
     }
 
     return Simple;
@@ -258,7 +292,7 @@ function GraficaSimple(Sale, Llega, NumeroParalelas, existeBucle) {
 /* ------------------------------- Grafica Conectada -------------------------------*/
 function GraficaConectada(MG, n) {
     let Conectada = true;
-
+    let conDes = document.getElementById('ConDes'); conDes.innerHTML = '';
     for (let i = 0; i < n; i++) {
         for (let j = 0; j < n; j++) {
             if (MG[i][j] <= 0) {
@@ -270,19 +304,22 @@ function GraficaConectada(MG, n) {
             break;
         }
     }
-
+    
     if (Conectada) {
         console.log("La gráfica es conectada");
+        conDes.innerHTML = 'La gráfica es conectada';
     } else {
         console.log("La gráfica es desconectada");
+        conDes.innerHTML = 'La gráfica es desconectada';
     }
-
+    
     return Conectada;
 }
 
 /* ------------------------------- Grafica Completa -------------------------------*/
 function GraficaCompleta(XG, Simple, n) {
     let Completa;
+    let complete = document.getElementById('completa'); complete.innerHTML = '';
 
     if (!Simple) {
         Completa = false;
@@ -307,8 +344,10 @@ function GraficaCompleta(XG, Simple, n) {
         }
 
         if (Completa) {
+            complete.innerHTML = 'La gráfica es completa';
             console.log("La gráfica es completa");
         } else {
+            complete.innerHTML = 'La gráfica no es completa';
             console.log("La gráfica no es completa");
         }
     }
@@ -318,11 +357,14 @@ function GraficaCompleta(XG, Simple, n) {
 
 /* ------------------------------- Arbol -------------------------------*/
 function Arbol(Conectada, e, n, Simple) {
+    let arbol  = document.getElementById('Arbol');
     if (Conectada && Simple && e === n - 1) {
+        arbol.innerHTML = 'La gráfica es un árbol'; 
         console.log("La gráfica es un árbol");
         return true;
     } else {
         console.log("La gráfica no es un árbol");
+        arbol.innerHTML = 'La gráfica no es un árbol'; 
         return false;
     }
 }
@@ -392,34 +434,46 @@ function calcularGradoNodos(AG, n, e, dirigida) {
             console.log(`El grado del nodo ${i+1} es ${grado[i]}`);
         }
     }
-
+    
     return { grado, gradoInterno, gradoExterno };
 }
 
 /* ------------------------------- Clasificar Nodos -------------------------------*/ 
 function clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, n, dirigida) {
+    let vAislados = document.getElementById('Aislados'); vAislados.innerHTML = ``;
+    let colgantes = document.getElementById('Colgantes'); colgantes.innerHTML = ``;
+    let Inicial = document.getElementById('Inicial'); Inicial.innerHTML = ``;
+    let Final = document.getElementById('Final'); Final.innerHTML = ``;
+
     console.log(` ${grado}, ${gradoInterno}, ${gradoExterno}, ${Sale}, ${Llega}, ${n}, ${dirigida}`);
+    
     for (let i = 0; i < n; i++) {
         if (dirigida) {
             if (gradoInterno[i] === 0 && gradoExterno[i] === 0) {
                 console.log(`El nodo ${i} es aislado`);
+                vAislados.innerHTML += `El nodo ${i} es aislado <br>`;
             } else {
                 if (gradoInterno[i] != 0 && gradoExterno[i] === 0) {
                     console.log(`El nodo ${i+1} es final`);
+                    Final.innerHTML += `El nodo ${i+1} es final <br>`;
                 } else {
                     if (gradoInterno[i] === 0 && gradoExterno[i] != 0){                        
                         console.log(`El nodo ${i+1} es inicial`);
+                        Inicial.innerHTML += `El nodo ${i+1} es inicial <br>`;
                     }else{
                         console.log(`El nodo ${i+1} no es aislado, final, ni inicial`);
+                        
                     }
                 }
             }
         } else {
             if (grado[i] === 0) {
                 console.log(`El nodo ${i} es aislado`);
+                vAislados.innerHTML += `El nodo ${i} es aislado<br>`;
             } else {
                 if (grado[i] === 1 && Sale[i] !== Llega[i]) {
                     console.log(`El nodo ${i+1} es colgante`);
+                    colgantes.innerHTML += `El nodo ${i+1} es colgante<br>`;
                 }
                 else{
                     console.log("no es nada");
@@ -429,43 +483,81 @@ function clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, n, diri
     }
 }
 
+function mostrarMatriz(matriz, elemento) {
+    let html = '<table>';
+    matriz.forEach(fila => {
+        html += '<tr>';
+        fila.forEach(valor => {
+            html += `<td>${valor}</td>`;
+        });
+        html += '</tr>';
+    });
+    html += '</table>';
+    elemento.innerHTML = html;
+}
 
-/* ------------------------------- VALIDACION -------------------------------*/
 
-boton.addEventListener('click', function() {
+function multipleFunctions() {
+    let matrizAG = document.getElementById('matriz-In')
+    let matrizXG = document.getElementById('matriz-Ad')
+    let matrizMG = document.getElementById('matriz-Ac')
 
+    let gradoInfo = document.getElementById('gradoV')
     
-    // Obtener el valor del input
-    // const valorNV = inputNV.value;
+
     const valorNV = parseInt(inputNV.value);
     const valorNL = parseInt(inputNL.value);
-    const valorSeleccionado = selectElement.value;
+    // const valorSeleccionado = selectElement.value;
     
     if(isNaN(valorNV) || isNaN(valorNL)){
         alert('Por favor ingresa valores válidos en los campos de número de vértices y número de líneas.');        
     }
     else{
-        console.log('Número de vértices:', valorNV);
-        console.log('Número de líneas:', valorNL);
-        console.log('El valor seleccionado es:', valorSeleccionado);
+        // console.log('Número de vértices:', valorNV);
+        // console.log('Número de líneas:', valorNL);
+        // console.log('El valor seleccionado es:', valorSeleccionado);
         const datos = obtenerDatosInputs();
         const Sale = datos.Sale;
         const Llega = datos.Llega;
         
         const existeBucle = bucles(Sale, Llega, valorNL);
         console.log("Existe al menos un bucle:", existeBucle);
-
+        
         // Determinar si el grafo es dirigido
         let Dirigida = selectElement.value === "0"; // Asegurarse de que sea un booleano 
-
-        const AG  = Incidencia(Sale, Llega); 
         
+        const AG  = Incidencia(Sale, Llega); 
         // Llamar a la función Adyacencia
         const XG = Adyacencia(Sale, Llega, valorNL, valorNV, Dirigida);
-        
         // Puedes hacer más cosas con la matriz XG aquí si es necesario
-
         const MG = Accesibilidad(XG, valorNV); 
+
+        //INSERCIÓN A HTML
+        matrizAG.innerHTML = '';matrizXG.innerHTML = '';matrizMG.innerHTML = '';
+        mostrarMatriz(AG, matrizAG);mostrarMatriz(XG, matrizXG);mostrarMatriz(MG, matrizMG);
+        
+        gradoInfo.innerHTML = ``;
+
+        const result = calcularGradoNodos(AG, valorNV, valorNL, Dirigida);                        //v. CalcularGradoNodos
+        console.log(result);
+
+        for (let i = 0; i < valorNV; i++) {
+            if (Dirigida) {
+                gradoInfo.innerHTML += `
+                grado interno del nodo ${i+1} : ${result.gradoInterno[i]} <br>
+                grado externo del nodo ${i+1} : ${result.gradoExterno[i]} <br>
+                `;
+                // console.log(`El grado interno del nodo ${i+1} es ${gradoInterno[i]}`);
+                // console.log(`El grado externo del nodo ${i+1} es ${gradoExterno[i]}`);
+            } else {
+                gradoInfo.innerHTML += `
+                grado del nodo ${i+1} : ${result.grado[i]} <br>
+                `
+                // console.log(`El grado del nodo ${i+1} es ${grado[i]}`);
+            }
+        }
+        clasificarNodos(result.grado, result.gradoInterno, result.gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos
+
 
         const resultadoParalelas = LineasParalelas(Sale, Llega, valorNL, Dirigida);
         console.log("Resultado de LineasParalelas:", resultadoParalelas);
@@ -485,21 +577,19 @@ boton.addEventListener('click', function() {
         // Llamar a la función GraficaSimetrica
         const esSimetrica = GraficaSimetrica(XG, valorNV, resultadoParalelas.NumeroParalelas, Dirigida);
 
-        const result = calcularGradoNodos(AG, valorNV, valorNL, Dirigida);                        //v. CalcularGradoNodos
-        console.log(result);
-
-//        const clasNod = clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos 
-        clasificarNodos(result.grado, result.gradoInterno, result.gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos
     }
 
-});
+    // graphCreation(Sale, Llega)
+}
 
 
 
-const graphNode_example =[
-    {id:1, value:4},
-    {id:2, value:2}
-]
+//--------------------- Ejecuta multipleFunctions
+boton.addEventListener('click', multipleFunctions );
+
+    // else{
+    // }
+// });
 
 
 // Función para multiplicar dos matrices
