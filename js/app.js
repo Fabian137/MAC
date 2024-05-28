@@ -476,51 +476,60 @@ function dataParams_Validation() {
 
 
 function multipleFunctions() {
-    console.log('Número de vértices:', valorNV);
-    console.log('Número de líneas:', valorNL);
-    console.log('El valor seleccionado es:', valorSeleccionado);
-    const datos = obtenerDatosInputs();
-    const Sale = datos.Sale;
-    const Llega = datos.Llega;
+    const valorNV = parseInt(inputNV.value);
+    const valorNL = parseInt(inputNL.value);
+    const valorSeleccionado = selectElement.value;
     
-    const existeBucle = bucles(Sale, Llega, valorNL);
-    console.log("Existe al menos un bucle:", existeBucle);
+    if(isNaN(valorNV) || isNaN(valorNL)){
+        alert('Por favor ingresa valores válidos en los campos de número de vértices y número de líneas.');        
+    }
+    else{
+        console.log('Número de vértices:', valorNV);
+        console.log('Número de líneas:', valorNL);
+        console.log('El valor seleccionado es:', valorSeleccionado);
+        const datos = obtenerDatosInputs();
+        const Sale = datos.Sale;
+        const Llega = datos.Llega;
+        
+        const existeBucle = bucles(Sale, Llega, valorNL);
+        console.log("Existe al menos un bucle:", existeBucle);
 
-    // Determinar si el grafo es dirigido
-    let Dirigida = selectElement.value === "0"; // Asegurarse de que sea un booleano 
+        // Determinar si el grafo es dirigido
+        let Dirigida = selectElement.value === "0"; // Asegurarse de que sea un booleano 
 
-    const AG  = Incidencia(Sale, Llega); 
-    
-    // Llamar a la función Adyacencia
-    const XG = Adyacencia(Sale, Llega, valorNL, valorNV, Dirigida);
-    
-    // Puedes hacer más cosas con la matriz XG aquí si es necesario
+        const AG  = Incidencia(Sale, Llega); 
+        
+        // Llamar a la función Adyacencia
+        const XG = Adyacencia(Sale, Llega, valorNL, valorNV, Dirigida);
+        
+        // Puedes hacer más cosas con la matriz XG aquí si es necesario
 
-    const MG = Accesibilidad(XG, valorNV); 
+        const MG = Accesibilidad(XG, valorNV); 
 
-    const resultadoParalelas = LineasParalelas(Sale, Llega, valorNL, Dirigida);
-    console.log("Resultado de LineasParalelas:", resultadoParalelas);
+        const resultadoParalelas = LineasParalelas(Sale, Llega, valorNL, Dirigida);
+        console.log("Resultado de LineasParalelas:", resultadoParalelas);
 
-    // En esSimple se guarda el valor booleano sobre si es simple o no.
-    const esSimple = GraficaSimple(Sale, Llega, resultadoParalelas.NumeroParalelas, existeBucle);
+        // En esSimple se guarda el valor booleano sobre si es simple o no.
+        const esSimple = GraficaSimple(Sale, Llega, resultadoParalelas.NumeroParalelas, existeBucle);
 
-    // Llamar a la función GraficaConectada
-    const esConectada = GraficaConectada(MG, valorNV);
+        // Llamar a la función GraficaConectada
+        const esConectada = GraficaConectada(MG, valorNV);
 
-    // Llamar a la función GraficaCompleta
-    const esCompleta = GraficaCompleta(XG, esSimple, valorNV);
-    
-    // Llamar a la función Arbol
-    const esArbol = Arbol(esConectada, valorNL, valorNV, esSimple);
+        // Llamar a la función GraficaCompleta
+        const esCompleta = GraficaCompleta(XG, esSimple, valorNV);
+        
+        // Llamar a la función Arbol
+        const esArbol = Arbol(esConectada, valorNL, valorNV, esSimple);
 
-    // Llamar a la función GraficaSimetrica
-    const esSimetrica = GraficaSimetrica(XG, valorNV, resultadoParalelas.NumeroParalelas, Dirigida);
+        // Llamar a la función GraficaSimetrica
+        const esSimetrica = GraficaSimetrica(XG, valorNV, resultadoParalelas.NumeroParalelas, Dirigida);
 
-    const result = calcularGradoNodos(AG, valorNV, valorNL, Dirigida);                        //v. CalcularGradoNodos
-    console.log(result);
+        const result = calcularGradoNodos(AG, valorNV, valorNL, Dirigida);                        //v. CalcularGradoNodos
+        console.log(result);
 
 //        const clasNod = clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos 
-    clasificarNodos(result.grado, result.gradoInterno, result.gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos
+        clasificarNodos(result.grado, result.gradoInterno, result.gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos
+    }
 
     // graphCreation(Sale, Llega)
 }
