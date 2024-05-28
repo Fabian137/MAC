@@ -89,6 +89,9 @@ function obtenerDatosInputs() {
 }
 
 
+
+
+
 function Incidencia(Sale, Llega) {
     const numLineas = parseInt(inputNL.value);
     const numVertices = parseInt(inputNV.value);
@@ -137,6 +140,8 @@ function multipleFunctions() {
     dataParams_Validation(numLineas, numVertices);
     const { Sale, Llega } = obtenerDatosInputs();
     Incidencia(Sale, Llega, numVertices, numLineas, Dirigida);
+
+    // graphCreation(Sale, Llega)
 }
 
 
@@ -188,3 +193,6 @@ function accesibilidad(XG, n) {
     }
 
 }
+
+
+
