@@ -69,59 +69,85 @@ function optionsCreateUpdate() {
         inputsContainer.appendChild(rowDiv);
     }
 }
+/* ------------------------------- LECTURA DE DATOS -------------------------------*/
 function obtenerDatosInputs() {
-    const inputs = document.getElementsByClassName('salida');
-    const inpute = document.getElementsByClassName('entrada');
-    const salida = [];
-    const entrada = []
+    const inputs = document.getElementsByClassName('salida');   //--------------------- Sale 
+    const inpute = document.getElementsByClassName('entrada');  //--------------------- Llega 
+    const Sale = [];
+    const Llega = [];
     for (let in1 of inputs) {
-        salida.push(in1.value);
+        Sale.push(parseInt(in1.value));
     }
     for (let in2 of inpute) {
-        entrada.push(in2.value);
+        Llega.push(parseInt(in2.value));
     }
 
-    console.log("entrada" + entrada);
-    console.log(salida);
+    console.log("entrada:", Llega);
+    console.log("salida:", Sale);
+
+    return { Sale, Llega };
 }
 
+
+function Incidencia(Sale, Llega) {
+    const numLineas = parseInt(inputNL.value);
+    const numVertices = parseInt(inputNV.value);
+    let Dirigida = selectElement.value === "0"; // Asegurarse de que sea un booleano
+
+    // Inicializar AG como una matriz bidimensional
+    const AG = Array.from({ length: numVertices }, () => Array(numLineas).fill(0));
+
+    // Corregir los bucles para que empiecen en 0
+    for (let i = 0; i < numLineas; i++) {
+        AG[Sale[i] - 1][i] = 1; // Restar 1 para ajustar el índice del vértice
+        if (Dirigida) {
+            AG[Llega[i] - 1][i] = -1; // Restar 1 para ajustar el índice del vértice
+        } else {
+            AG[Llega[i] - 1][i] = 1; // Restar 1 para ajustar el índice del vértice
+        }
+    }
+
+    console.log("La matriz de incidencia es:");
+    for (let i = 0; i < numVertices; i++) {
+        console.log(AG[i].join(" "));
+    }
+
+    return AG;
+}
 
 /* ------------------------------- VALIDACION -------------------------------*/
-
-boton.addEventListener('click', function() {
-
-    
-    // Obtener el valor del input
-    // const valorNV = inputNV.value;
-    const valorNV = parseInt(inputNV.value);
-    const valorNL = parseInt(inputNL.value);
-    const valorSeleccionado = selectElement.value;
-    
-    if(isNaN(valorNV) || isNaN(valorNL)){
-        alert('Por favor ingresa valores válidos en los campos de número de vértices y número de líneas.');        
+function dataParams_Validation() {
+    let Dirigida = selectElement.value;
+    const numLineas = parseInt(inputNL.value);
+    const numVertices = parseInt(inputNV.value); // Obtener el valor actualizado de numVertices
+    if (isNaN(numLineas) || isNaN(numVertices)) {
+        alert('Por favor ingresa valores válidos en los campos de número de vértices y número de líneas.');
+    } else {
+        console.log('Número de vértices:', numVertices);
+        console.log('Número de líneas:', numLineas);
+        console.log('El valor seleccionado es:', Dirigida);
     }
-    else{
-        console.log('Número de vértices:', valorNV);
-        console.log('Número de líneas:', valorNL);
-        console.log('El valor seleccionado es:', valorSeleccionado);
-        obtenerDatosInputs(valorNL);
-    }
-/* 
-
-for (let i = 0; i < valorNV; i++) {
-    verticesArray.push(i);
 }
 
-d3.select('.nodes')
-.selectAll('.circle')
-// .data(graphNode_example)
-.data(verticesArray)
-.enter()
-.append('div')
-.classed('circle', true);
-// .text(dta => dta);
-*/
-});
+
+function multipleFunctions() {
+    let Dirigida = selectElement.value;
+    const numLineas = parseInt(inputNL.value);
+    const numVertices = parseInt(inputNV.value); // Obtener el valor actualizado de numVertices
+    dataParams_Validation(numLineas, numVertices);
+    const { Sale, Llega } = obtenerDatosInputs();
+    Incidencia(Sale, Llega, numVertices, numLineas, Dirigida);
+}
+
+
+
+//--------------------- Ejecuta multipleFunctions
+boton.addEventListener('click', multipleFunctions );
+
+
+
+
+
 
 
 
