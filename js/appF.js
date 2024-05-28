@@ -166,7 +166,7 @@ function Accesibilidad(XG, n) {
     }
 
     // Calcular las potencias y acumular en MG
-    for (let k = 2; k <= n-1; k++) {
+    for (let k = 2; k <= n; k++) {
         Potencia = multiplicarMatrices(Potencia, XG, n);
         MG = sumarMatrices(MG, Potencia, n);
     }
@@ -352,7 +352,7 @@ function GraficaSimetrica(XG, n, NumeroParalelas, Dirigida) {
             console.log("La gráfica es asimétrica");
         }
     } else {
-        console.log("La gráfica no es Dirigida o contiene líneas paralelas");
+        console.log("La gráfica no es Dirigida o contiene líneas paralelas, por lo que no es simetrica");
         
     }
 }
@@ -429,6 +429,63 @@ function clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, n, diri
     }
 }
 
+/* ------------------------------- Gráfica regular -------------------------------*/
+function GraficaRegular(grado, gradoInterno, gradoExterno, dirigida, n) {
+    let Regular = true;
+    let AuxGrado;
+
+    if (!dirigida) {
+        AuxGrado = grado[0]; // Inicializamos con el primer nodo (índice 0 en JS)
+        for (let i = 1; i < n; i++) {
+            if (grado[i] !== AuxGrado) {
+                Regular = false;
+                break;
+            }
+        }
+    } else {
+        AuxGrado = gradoInterno[0]; // Inicializamos con el primer nodo (índice 0 en JS)
+        for (let i = 1; i < n; i++) {
+            if (gradoInterno[i] !== AuxGrado || gradoExterno[i] !== AuxGrado) {
+                Regular = false;
+                break;
+            }
+        }
+    }
+
+    if (Regular) {
+        console.log("La gráfica es regular");
+    } else {
+        console.log("La gráfica no es regular");
+    }
+
+    return Regular;
+}
+
+/* ------------------------------- Grafica Balanceada -------------------------------*/
+function GraficaBalanceada(gradoInterno, gradoExterno, n, dirigida) {
+    if (dirigida) {
+        let Balanceada = true;
+        for (let i = 0; i < n; i++) {
+            if (gradoInterno[i] !== gradoExterno[i]) {
+                Balanceada = false;
+                break;
+            }
+        }
+
+        if (Balanceada) {
+            console.log("La gráfica dirigida es balanceada");
+        } else {
+            console.log("La gráfica dirigida no es balanceada");
+        }
+
+        return Balanceada;
+    } else {
+        console.log("La gráfica no es dirigida");
+        return false;
+    }
+}
+
+
 
 /* ------------------------------- VALIDACION -------------------------------*/
 
@@ -472,6 +529,13 @@ boton.addEventListener('click', function() {
 
         // En esSimple se guarda el valor booleano sobre si es simple o no.
         const esSimple = GraficaSimple(Sale, Llega, resultadoParalelas.NumeroParalelas, existeBucle);
+        
+        const { grado, gradoInterno, gradoExterno } = calcularGradoNodos(AG, valorNV, valorNL, Dirigida);
+
+
+        // Verificar si la gráfica es regular
+        const esRegular = GraficaRegular(grado, gradoInterno, gradoExterno, Dirigida, valorNV);
+
 
         // Llamar a la función GraficaConectada
         const esConectada = GraficaConectada(MG, valorNV);
@@ -485,11 +549,12 @@ boton.addEventListener('click', function() {
         // Llamar a la función GraficaSimetrica
         const esSimetrica = GraficaSimetrica(XG, valorNV, resultadoParalelas.NumeroParalelas, Dirigida);
 
-        const result = calcularGradoNodos(AG, valorNV, valorNL, Dirigida);                        //v. CalcularGradoNodos
-        console.log(result);
-
 //        const clasNod = clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos 
-        clasificarNodos(result.grado, result.gradoInterno, result.gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos
+        clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos
+
+        // Verificar si la gráfica es balanceada
+        const esBalanceada = GraficaBalanceada(gradoInterno, gradoExterno, valorNV, Dirigida);
+
     }
 
 });
