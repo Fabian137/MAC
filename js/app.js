@@ -371,6 +371,7 @@ function Arbol(Conectada, e, n, Simple) {
 
 /* ------------------------------- Gráfica simetrica -------------------------------*/
 function GraficaSimetrica(XG, n, NumeroParalelas, Dirigida) {
+    let sim = document.getElementById('Simetrica');
     if (NumeroParalelas === 0 && Dirigida) {
         let Simetrica = true;
         let i = 0;
@@ -390,11 +391,14 @@ function GraficaSimetrica(XG, n, NumeroParalelas, Dirigida) {
 
         if (Simetrica) {
             console.log("La gráfica es simétrica");
+            sim.innerHTML = 'La gráfica es simétrica';
         } else {
             console.log("La gráfica es asimétrica");
+            sim.innerHTML = 'La gráfica es asimétrica';
         }
     } else {
         console.log("La gráfica no es Dirigida o contiene líneas paralelas");
+        sim.innerHTML = 'La gráfica no es Dirigida o contiene líneas paralelas';
         
     }
 }
@@ -483,6 +487,71 @@ function clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, n, diri
     }
 }
 
+
+/* ------------------------------- Gráfica regular -------------------------------*/
+function GraficaRegular(grado, gradoInterno, gradoExterno, dirigida, n) {
+    let Regular = true;
+    let AuxGrado;
+    let reg = document.getElementById('regular');
+
+    if (!dirigida) {
+        AuxGrado = grado[0]; // Inicializamos con el primer nodo (índice 0 en JS)
+        for (let i = 1; i < n; i++) {
+            if (grado[i] !== AuxGrado) {
+                Regular = false;
+                break;
+            }
+        }
+    } else {
+        AuxGrado = gradoInterno[0]; // Inicializamos con el primer nodo (índice 0 en JS)
+        for (let i = 1; i < n; i++) {
+            if (gradoInterno[i] !== AuxGrado || gradoExterno[i] !== AuxGrado) {
+                Regular = false;
+                break;
+            }
+        }
+    }
+
+    if (Regular) {
+        console.log("La gráfica es regular");
+        reg.innerHTML = 'La gráfica es regular';
+    } else {
+        console.log("La gráfica no es regular");
+        reg.innerHTML = 'La gráfica no es regular';
+    }
+
+    return Regular;
+}
+
+/* ------------------------------- Grafica Balanceada -------------------------------*/
+function GraficaBalanceada(gradoInterno, gradoExterno, n, dirigida) {
+    let balanceada = document.getElementById('Balanceada');
+    if (dirigida) {
+        let Balanceada = true;
+        for (let i = 0; i < n; i++) {
+            if (gradoInterno[i] !== gradoExterno[i]) {
+                Balanceada = false;
+                break;
+            }
+        }
+
+        if (Balanceada) {
+            console.log("La gráfica dirigida es balanceada");
+            balanceada.innerHTML = 'La gráfica dirigida es balanceada'
+        } else {
+            console.log("La gráfica dirigida no es balanceada");
+            balanceada.innerHTML = 'La gráfica dirigida no es balanceada'
+        }
+        
+        return Balanceada;
+    } else {
+        console.log("La gráfica no es dirigida");
+        balanceada.innerHTML = 'La gráfica no esdirigida'
+        return false;
+    }
+}
+
+
 function mostrarMatriz(matriz, elemento) {
     let html = '<table>';
     matriz.forEach(fila => {
@@ -494,6 +563,30 @@ function mostrarMatriz(matriz, elemento) {
     });
     html += '</table>';
     elemento.innerHTML = html;
+}
+
+// Función para multiplicar dos matrices
+function multiplicarMatrices(A, B, n) {
+    let resultado = Array.from({ length: n }, () => Array(n).fill(0));
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            for (let k = 0; k < n; k++) {
+                resultado[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+    return resultado;
+}
+
+// Función para sumar dos matrices
+function sumarMatrices(A, B, n) {
+    let resultado = Array.from({ length: n }, () => Array(n).fill(0));
+    for (let i = 0; i < n; i++) {
+        for (let j = 0; j < n; j++) {
+            resultado[i][j] = A[i][j] + B[i][j];
+        }
+    }
+    return resultado;
 }
 
 
@@ -538,25 +631,25 @@ function multipleFunctions() {
         
         gradoInfo.innerHTML = ``;
 
-        const result = calcularGradoNodos(AG, valorNV, valorNL, Dirigida);                        //v. CalcularGradoNodos
-        console.log(result);
+        const {grado, gradoInterno, gradoExterno} = calcularGradoNodos(AG, valorNV, valorNL, Dirigida);                        //v. CalcularGradoNodos
+        // console.log(result);
 
         for (let i = 0; i < valorNV; i++) {
             if (Dirigida) {
                 gradoInfo.innerHTML += `
-                grado interno del nodo ${i+1} : ${result.gradoInterno[i]} <br>
-                grado externo del nodo ${i+1} : ${result.gradoExterno[i]} <br>
+                grado interno del nodo ${i+1} : ${gradoInterno[i]} <br>
+                grado externo del nodo ${i+1} : ${gradoExterno[i]} <br>
                 `;
                 // console.log(`El grado interno del nodo ${i+1} es ${gradoInterno[i]}`);
                 // console.log(`El grado externo del nodo ${i+1} es ${gradoExterno[i]}`);
             } else {
                 gradoInfo.innerHTML += `
-                grado del nodo ${i+1} : ${result.grado[i]} <br>
+                grado del nodo ${i+1} : ${grado[i]} <br>
                 `
                 // console.log(`El grado del nodo ${i+1} es ${grado[i]}`);
             }
         }
-        clasificarNodos(result.grado, result.gradoInterno, result.gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos
+        clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos
 
 
         const resultadoParalelas = LineasParalelas(Sale, Llega, valorNL, Dirigida);
@@ -577,41 +670,15 @@ function multipleFunctions() {
         // Llamar a la función GraficaSimetrica
         const esSimetrica = GraficaSimetrica(XG, valorNV, resultadoParalelas.NumeroParalelas, Dirigida);
 
+        const esRegular = GraficaRegular(grado, gradoInterno, gradoExterno, Dirigida, valorNV);
+        
+        const esBalanceada = GraficaBalanceada(gradoInterno, gradoExterno, valorNV, Dirigida);
+
     }
 
     // graphCreation(Sale, Llega)
 }
 
 
-
 //--------------------- Ejecuta multipleFunctions
 boton.addEventListener('click', multipleFunctions );
-
-    // else{
-    // }
-// });
-
-
-// Función para multiplicar dos matrices
-function multiplicarMatrices(A, B, n) {
-    let resultado = Array.from({ length: n }, () => Array(n).fill(0));
-    for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-            for (let k = 0; k < n; k++) {
-                resultado[i][j] += A[i][k] * B[k][j];
-            }
-        }
-    }
-    return resultado;
-}
-
-// Función para sumar dos matrices
-function sumarMatrices(A, B, n) {
-    let resultado = Array.from({ length: n }, () => Array(n).fill(0));
-    for (let i = 0; i < n; i++) {
-        for (let j = 0; j < n; j++) {
-            resultado[i][j] = A[i][j] + B[i][j];
-        }
-    }
-    return resultado;
-}
