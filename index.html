@@ -88,111 +88,117 @@
         </section>
         
         <section class="container">
-            <svg width="600" height="400"></svg>
+            <div class="row">
+                <div class="col">
+                    <svg width="600" height="400"></svg>
+                </div>
+                <div class="col">
+                    <section class="" style="padding-top: 5rem; padding-bottom: 5rem;">
+                        <div class="accordion" id="accordionPanelsStayOpenExample">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
+                                    <strong>Matrices</strong>
+                                </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
+                                <div class="accordion-body" id="matrices">
+                                    <div class="row">
+                                        <h5> <strong>Matriz de Incidencia</strong></h5>
+                                        <div class="col" id="matriz-In"></div>    
+                                        <h5> <strong>Matriz de Adyacencia</strong></h5>
+                                        <div class="col" id="matriz-Ad"></div>    
+                                        <h5> <strong>Matriz de Accesibilidad</strong></h5>
+                                        <div class="col" id="matriz-Ac"></div>    
+                                    </div>
+                                    
+                                </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
+                                    <strong>Información vértices</strong>
+                                </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <h5> <strong>Grado de los Vértices</strong></h5>
+                                        <div id="gradoV"></div>
+                                    <h5>
+                                        <strong>Vértices Aislados</strong></h5>
+                                        <div id="Aislados"></div>
+                                    <h5>
+                                        <strong>Colgantes</strong></h5>
+                                        <div id="Colgantes"></div>
+                                    <h5>
+                                        <strong>Inicial</strong></h5>
+                                        <div id="Inicial"></div>
+                                    <h5>
+                                        <strong>Final</strong></h5>
+                                        <div id="Final"></div>
+                                </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    <strong>Información de líneas</strong>
+                                </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <h5><strong>Lineas Paralelas</strong></h5>
+                                    <div id="Lparalelas"></div>
+            
+                                    <h5><strong>Bucles</strong></h5>
+                                    <div id="Lbucles"></div>
+            
+                                    <h5><strong>Líneas en serie</strong></h5>
+                                        <div id="Lserie"></div>
+                                </div>
+                                </div>
+                            </div>
+            
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
+                                    <strong>Clasificación de la Gráfica</strong>
+                                </button>
+                                </h2>
+                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
+                                <div class="accordion-body">
+                                    <h5> <strong>Simple o General</strong></h5>
+                                        <div id="simGen"></div>
+            
+                                    <h5><strong>Conectada o Desconectada</strong></h5>
+                                        <div id="ConDes"></div>
+            
+                                    <h5><strong>Regular</strong></h5>
+                                        <div id="regular"></div>
+            
+                                    <h5><strong>Completa</strong></h5>
+                                        <div id="completa"></div>
+            
+                                    <h5><strong>Árbol</strong></h5>
+                                        <div id="Arbol"></div>
+            
+                                    <h5><strong>Simétrica</strong></h5>
+                                        <div id="Simetrica"></div>
+            
+                                    <h5><strong>Balanceada</strong></h5>
+                                        <div id="Balanceada"></div>
+            
+                                    
+                                </div>
+                                </div>
+                            </div>
+                            </div>
+                    </section>
+                </div>
+            </div>
         </section>
 
-        <section class="container" style="padding-top: 5rem; padding-bottom: 5rem;">
-            <div class="accordion" id="accordionPanelsStayOpenExample">
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseOne" aria-expanded="true" aria-controls="panelsStayOpen-collapseOne">
-                        <strong>Matrices</strong>
-                    </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show">
-                    <div class="accordion-body" id="matrices">
-                        <div class="row">
-                            <h5> <strong>Matriz de Incidencia</strong></h5>
-                            <div class="col" id="matriz-In"></div>    
-                            <h5> <strong>Matriz de Adyacencia</strong></h5>
-                            <div class="col" id="matriz-Ad"></div>    
-                            <h5> <strong>Matriz de Accesibilidad</strong></h5>
-                            <div class="col" id="matriz-Ac"></div>    
-                        </div>
-                        
-                    </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseTwo" aria-expanded="false" aria-controls="panelsStayOpen-collapseTwo">
-                        <strong>Información vértices</strong>
-                    </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse">
-                    <div class="accordion-body">
-                        <h5> <strong>Grado de los Vértices</strong></h5>
-                            <div id="gradoV"></div>
-                        <h5>
-                            <strong>Vértices Aislados</strong></h5>
-                            <div id="Aislados"></div>
-                        <h5>
-                            <strong>Colgantes</strong></h5>
-                            <div id="Colgantes"></div>
-                        <h5>
-                            <strong>Inicial</strong></h5>
-                            <div id="Inicial"></div>
-                        <h5>
-                            <strong>Final</strong></h5>
-                            <div id="Final"></div>
-                    </div>
-                    </div>
-                </div>
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                        <strong>Información de líneas</strong>
-                    </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-                    <div class="accordion-body">
-                        <h5><strong>Lineas Paralelas</strong></h5>
-                        <div id="Lparalelas"></div>
-
-                        <h5><strong>Bucles</strong></h5>
-                        <div id="Lbucles"></div>
-
-                        <h5><strong>Líneas en serie</strong></h5>
-                            <div id="Lserie"></div>
-                    </div>
-                    </div>
-                </div>
-
-                <div class="accordion-item">
-                    <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#panelsStayOpen-collapseThree" aria-expanded="false" aria-controls="panelsStayOpen-collapseThree">
-                        <strong>Clasificación de la Gráfica</strong>
-                    </button>
-                    </h2>
-                    <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse">
-                    <div class="accordion-body">
-                        <h5> <strong>Simple o General</strong></h5>
-                            <div id="simGen"></div>
-
-                        <h5><strong>Conectada o Desconectada</strong></h5>
-                            <div id="ConDes"></div>
-
-                        <h5><strong>Regular</strong></h5>
-                            <div id="regular"></div>
-
-                        <h5><strong>Completa</strong></h5>
-                            <div id="completa"></div>
-
-                        <h5><strong>Árbol</strong></h5>
-                            <div id="Arbol"></div>
-
-                        <h5><strong>Simétrica</strong></h5>
-                            <div id="Simetrica"></div>
-
-                        <h5><strong>Balanceada</strong></h5>
-                            <div id="Balanceada"></div>
-
-                        
-                    </div>
-                    </div>
-                </div>
-                </div>
-        </section>
         
 
         

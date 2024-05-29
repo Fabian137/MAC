@@ -1,8 +1,8 @@
 
 En lugar de hacer un ejecutable nos decidimos por una *WebApp* que se hostea usando el servicio de Netlify desde este repositorio (esta rama). [Página de proyecto](https://graph-project.netlify.app/)
+
  
 ## El programa nos pide: 
-
 -        **Datos de Entrada**
 -        **Número de Vértice**
 -        **Número de Líneas**
@@ -11,6 +11,12 @@ En lugar de hacer un ejecutable nos decidimos por una *WebApp* que se hostea usa
 -        **Datos de salida**
 
 Una vez que el programa ha leído  los datos anteriores y deberá presentar la siguiente información:
+
+## Uso
+- Se ingresa el número de vértices
+- Se ingresa el número de líneas
+    - Posteriormente aparecen una serie de inputs que corresponden a la relación de salida y llegada de las aristas
+- Se presiona *ejecutar* y se mostrará la gráfica (sin dirección) y a la derecha está un acordeon donde se mostrará la información. La gráfica a veces nos mostrará los nodos pero saldrán del area donde se muestra, se pueden mover los nodos o arrastrarlos.
 
 ### Matrices
 - Incidencia

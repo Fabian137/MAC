@@ -136,7 +136,7 @@ function obtenerDatosInputs() {
 
 //--------------------- Ejecuta multipleFunctions
 boton.addEventListener('click', () => {
-    // let Dirigida = selectElement.value;
+    d3.select("svg").selectAll("*").remove();
     let Dirigida = selectElement.value === "0";
     const numLineas = parseInt(inputNL.value);
     const numVertices = parseInt(inputNV.value); // Obtener el valor actualizado de numVertices
