@@ -3,12 +3,12 @@ En lugar de hacer un ejecutable nos decidimos por una *WebApp* que se hostea usa
 
  
 ## El programa nos pide: 
--        **Datos de Entrada**
--        **Número de Vértice**
--        **Número de Líneas**
--        **Tipo de gráfica (dirigida o no dirigida)**
--        **Relación entre los vértices**
--        **Datos de salida**
+- **Datos de Entrada**
+- **Número de Vértice**
+- **Número de Líneas**
+- **Tipo de gráfica (dirigida o no dirigida)**
+- **Relación entre los vértices**
+- **Datos de salida**
 
 Una vez que el programa ha leído  los datos anteriores y deberá presentar la siguiente información:
 
