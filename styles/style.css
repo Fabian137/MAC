@@ -93,3 +93,11 @@ th, td {
     padding: 5px;
     text-align: center;
 }
+
+/* ---------------------------------------------------------------------- */
+
+.accordion{
+    --bs-accordion-bg: rgba(49, 49, 49, 0.089);
+    --bs-accordion-btn-color: white;
+    --bs-accordion-color: white;
+}
