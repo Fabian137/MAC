@@ -179,7 +179,6 @@ function Adyacencia(Sale, Llega, e, n, Dirigida) {
         }
         console.log(row);
     }
-
     return XG;
 }
 /* ------------------------------- Matriz de Accesibilidad-------------------------------*/
@@ -197,7 +196,7 @@ function Accesibilidad(XG, n) {
     }
 
     // Calcular las potencias y acumular en MG
-    for (let k = 2; k <= n-1; k++) {
+    for (let k = 2; k <= n; k++) {
         Potencia = multiplicarMatrices(Potencia, XG, n);
         MG = sumarMatrices(MG, Potencia, n);
     }
@@ -397,9 +396,8 @@ function GraficaSimetrica(XG, n, NumeroParalelas, Dirigida) {
             sim.innerHTML = 'La gráfica es asimétrica';
         }
     } else {
-        console.log("La gráfica no es Dirigida o contiene líneas paralelas");
-        sim.innerHTML = 'La gráfica no es Dirigida o contiene líneas paralelas';
-        
+        console.log("La gráfica no es Dirigida o contiene líneas paralelas, por lo que no es simetrica");
+        sim.innerHTML = 'La gráfica no es Dirigida o contiene líneas paralelas, por lo que no es simetrica';        
     }
 }
 
@@ -414,15 +412,14 @@ function calcularGradoNodos(AG, n, e, dirigida) {
             if (dirigida) {
                 if (AG[i][j] === 1) {
                     gradoExterno[i] += 1;
-                }
-                else{
-                    if (AG[i][j] == -1) {
-                        gradoInterno[i] += 1;
-                    }
+                } else if (AG[i][j] === -1) {
+                    gradoInterno[i] += 1;
                 }
             } else {
                 if (AG[i][j] === 1) {
                     grado[i] += 1;
+                } else if (AG[i][j] === 2) {  // Para bucles en grafos no dirigidos
+                    grado[i] += 2;
                 }
             }
         }
@@ -432,15 +429,16 @@ function calcularGradoNodos(AG, n, e, dirigida) {
 
     for (let i = 0; i < n; i++) {
         if (dirigida) {
-            console.log(`El grado interno del nodo ${i+1} es ${gradoInterno[i]}`);
-            console.log(`El grado externo del nodo ${i+1} es ${gradoExterno[i]}`);
+            console.log(`El grado interno del nodo ${i + 1} es ${gradoInterno[i]}`);
+            console.log(`El grado externo del nodo ${i + 1} es ${gradoExterno[i]}`);
         } else {
-            console.log(`El grado del nodo ${i+1} es ${grado[i]}`);
+            console.log(`El grado del nodo ${i + 1} es ${grado[i]}`);
         }
     }
     
     return { grado, gradoInterno, gradoExterno };
 }
+
 
 /* ------------------------------- Clasificar Nodos -------------------------------*/ 
 function clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, n, dirigida) {
@@ -454,8 +452,8 @@ function clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, n, diri
     for (let i = 0; i < n; i++) {
         if (dirigida) {
             if (gradoInterno[i] === 0 && gradoExterno[i] === 0) {
-                console.log(`El nodo ${i} es aislado`);
-                vAislados.innerHTML += `El nodo ${i} es aislado <br>`;
+                console.log(`El nodo ${i+1} es aislado`);
+                vAislados.innerHTML += `El nodo ${i+1} es aislado <br>`;
             } else {
                 if (gradoInterno[i] != 0 && gradoExterno[i] === 0) {
                     console.log(`El nodo ${i+1} es final`);
@@ -472,8 +470,8 @@ function clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, n, diri
             }
         } else {
             if (grado[i] === 0) {
-                console.log(`El nodo ${i} es aislado`);
-                vAislados.innerHTML += `El nodo ${i} es aislado<br>`;
+                console.log(`El nodo ${i+1} es aislado`);
+                vAislados.innerHTML += `El nodo ${i+1} es aislado<br>`;
             } else {
                 if (grado[i] === 1 && Sale[i] !== Llega[i]) {
                     console.log(`El nodo ${i+1} es colgante`);
@@ -487,6 +485,99 @@ function clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, n, diri
     }
 }
 
+/* ------------------------------- Gráfica regular -------------------------------*/
+function GraficaRegular(grado, gradoInterno, gradoExterno, dirigida, n) {
+    let Regular = true;
+    let AuxGrado;
+
+    if (!dirigida) {
+        AuxGrado = grado[0]; // Inicializamos con el primer nodo (índice 0 en JS)
+        for (let i = 1; i < n; i++) {
+            if (grado[i] !== AuxGrado) {
+                Regular = false;
+                break;
+            }
+        }
+    } else {
+        AuxGrado = gradoInterno[0]; // Inicializamos con el primer nodo (índice 0 en JS)
+        for (let i = 1; i < n; i++) {
+            if (gradoInterno[i] !== AuxGrado || gradoExterno[i] !== AuxGrado) {
+                Regular = false;
+                break;
+            }
+        }
+    }
+
+    if (Regular) {
+        console.log("La gráfica es regular");
+    } else {
+        console.log("La gráfica no es regular");
+    }
+
+    return Regular;
+}
+
+/* ------------------------------- Grafica Balanceada -------------------------------*/
+function GraficaBalanceada(gradoInterno, gradoExterno, n, dirigida) {
+    if (dirigida) {
+        let Balanceada = true;
+        for (let i = 0; i < n; i++) {
+            if (gradoInterno[i] !== gradoExterno[i]) {
+                Balanceada = false;
+                break;
+            }
+        }
+
+        if (Balanceada) {
+            console.log("La gráfica dirigida es balanceada");
+        } else {
+            console.log("La gráfica dirigida no es balanceada");
+        }
+
+        return Balanceada;
+    } else {
+        console.log("La gráfica no es dirigida");
+        return false;
+    }
+}
+
+/* ------------------------------- Lineas en Serie -------------------------------*/
+function LineasSerie(grado, Sale, Llega, Paralelas, valorNV, valorNL, Dirigida) {
+    for (let i = 1; i <= valorNV; i++) {
+        if (grado[i - 1] === 2) { // Utilizar índice i-1 para acceder a grado correctamente
+            let Linea1 = -1, Linea2 = -1; // Inicializar con -1 para evitar índices válidos
+            let Encontro1 = false, Encontro2 = false;
+            let j = 0; // Iniciar con 0 ya que los índices de Sale y Llega son 0-based
+
+            // Buscar la primera línea conectada al vértice i
+            while (j < valorNL && !Encontro1) {
+                if (Sale[j] === i || Llega[j] === i) {
+                    Linea1 = j;
+                    Encontro1 = true;
+                }
+                j++;
+            }
+
+            // Continuar buscando desde donde se quedó para la segunda línea
+            while (j < valorNL && !Encontro2) {
+                if ((Sale[j] === i || Llega[j] === i) && j !== Linea1) {
+                    Linea2 = j;
+                    Encontro2 = true;
+                }
+                j++;
+            }
+
+            // Verificación de paralelas
+            if (Linea1 !== -1 && Linea2 !== -1 && Paralelas[Linea1] === 0 && Paralelas[Linea2] === 0) {
+                // Verificar si las dos líneas comparten el vértice i
+                if ((Sale[Linea1] === i || Llega[Linea1] === i) && 
+                    (Sale[Linea2] === i || Llega[Linea2] === i)) {
+                    console.log(`La línea ${Linea1 + 1} y la línea ${Linea2 + 1} están en serie`);
+                }
+            }
+        }
+    }
+}
 
 /* ------------------------------- Gráfica regular -------------------------------*/
 function GraficaRegular(grado, gradoInterno, gradoExterno, dirigida, n) {
@@ -657,6 +748,13 @@ function multipleFunctions() {
 
         // En esSimple se guarda el valor booleano sobre si es simple o no.
         const esSimple = GraficaSimple(Sale, Llega, resultadoParalelas.NumeroParalelas, existeBucle);
+        
+        const { grado, gradoInterno, gradoExterno } = calcularGradoNodos(AG, valorNV, valorNL, Dirigida);
+
+
+        // Verificar si la gráfica es regular
+        const esRegular = GraficaRegular(grado, gradoInterno, gradoExterno, Dirigida, valorNV);
+
 
         // Llamar a la función GraficaConectada
         const esConectada = GraficaConectada(MG, valorNV);
@@ -670,9 +768,13 @@ function multipleFunctions() {
         // Llamar a la función GraficaSimetrica
         const esSimetrica = GraficaSimetrica(XG, valorNV, resultadoParalelas.NumeroParalelas, Dirigida);
 
-        const esRegular = GraficaRegular(grado, gradoInterno, gradoExterno, Dirigida, valorNV);
-        
+        clasificarNodos(grado, gradoInterno, gradoExterno, Sale, Llega, valorNV, Dirigida);       //V.Clasificar Nodos
+
+        // Verificar si la gráfica es balanceada
         const esBalanceada = GraficaBalanceada(gradoInterno, gradoExterno, valorNV, Dirigida);
+
+        LineasSerie(grado, Sale, Llega, resultadoParalelas.Paralelas, valorNV, valorNL, Dirigida);
+
 
     }
 
