@@ -1,10 +1,10 @@
 DesarrolloWeb/QuaestioCollectiva/api
 DesarrolloWeb/QuaestioCollectiva/public/api
-DesarrolloWeb/QuaestioCollectiva/src/config/database.php
+
 DesarrolloWeb/QuaestioCollectiva/src/config/auth_functions.php
 DesarrolloWeb/QuaestioCollectiva/src/controllers
 DesarrolloWeb/QuaestioCollectiva/public/assets/templates
 DesarrolloWeb/QuaestioCollectiva/public/index.php
 DesarrolloWeb/QuaestioCollectiva/public/auth/.htaccess
 DesarrolloWeb/QuaestioCollectiva/docker
-
+#QuaestioCollectiva/
