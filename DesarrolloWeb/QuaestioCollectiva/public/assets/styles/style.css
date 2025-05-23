@@ -15,12 +15,11 @@
 
 
 /*  */
-.login-form{margin: 4rem 27%;}
+.login-form{margin: 4rem 15%;}
 .box-shadow{
-
-  height: 45vh;
+  /* height: 45vh; */
   flex-direction: column;
-  margin: 4rem;
+  /* margin: 4rem; */
   padding: 2.5rem;
   border-radius: 0.5rem;
   box-shadow: 3px 5px 10px 1px #c5c5c5, -6px -6px 12px #ffffff;

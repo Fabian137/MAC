@@ -1,3 +1,11 @@
+<?php
+session_start();
+// Verificar si ya está logueado
+if (isset($_SESSION['usuario_id'])) {
+    header("Location: main.php");
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,7 +17,7 @@
     <link rel="stylesheet" href="../styles/style.css">
 </head>
 
-<body style="background-color: #181a1b;">
+<body style="background-color: #181a1b; color:white" >
 
 
     <header style="height: 100dvh;">
