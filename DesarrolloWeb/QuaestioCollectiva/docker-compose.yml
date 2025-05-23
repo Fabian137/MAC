@@ -1,0 +1,36 @@
+# version: '3'
+
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: quaestio_collectiva
+      MYSQL_USER: usuario
+      MYSQL_PASSWORD: netusercfphynxb
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+  webserver:
+    image: php:8.2-apache
+    ports:
+      - "80:80"
+    environment:
+      # - ALLOW_OVERRIDE=All
+      # - APACHE_ALLOW_OVERRIDE=All  # Permite .htaccess
+      APACHE_DOCUMENT_ROOT: /var/www/html/assets/auth  # Ruta directa a tu auth
+    volumes:
+      - ./public:/var/www/html
+      - ./src/config:/var/www/config  # Para acceso a database.php
+      # - ./src/config:/var/www/config  # Añade esta línea
+      - ./api:/var/www/html/api  # Para que PHP acceda a los endpoints
+    depends_on:
+      - db
+    command: >
+      bash -c "docker-php-ext-install pdo pdo_mysql &&
+      a2enmod rewrite &&
+      apache2-foreground"
+
+volumes:
+  db_data:

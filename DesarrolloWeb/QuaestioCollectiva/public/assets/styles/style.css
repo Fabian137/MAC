@@ -1,0 +1,44 @@
+/*GLOBALS*/
+.right-space{
+  margin-right: 1.5rem;
+}
+::-webkit-scrollbar {
+  width: 0.5rem;
+  border-radius: 1rem;
+}
+::-webkit-scrollbar-thumb{
+  width: 1vh;
+  border-radius: 1rem;
+  background-color: #b5b5b5;
+}
+
+
+
+/*  */
+.login-form{margin: 4rem 27%;}
+.box-shadow{
+
+  height: 45vh;
+  flex-direction: column;
+  margin: 4rem;
+  padding: 2.5rem;
+  border-radius: 0.5rem;
+  box-shadow: 3px 5px 10px 1px #c5c5c5, -6px -6px 12px #ffffff;
+}
+
+.section {
+  margin-top: 20px;
+  margin-bottom: 0px;
+  padding-bottom: opx;
+}
+.top-space{margin-top: 2.5rem;}
+
+
+/* REGISTRO */
+.registro-header{
+    height: 100vh;
+    background: linear-gradient(-90deg, rgb(19, 21, 22), rgba(0, 0, 0, 0)), url(../imgs/opBTaj1.png);
+    /* background-image: url(/assets/imgs/opBTaj1.png); */
+    background-size: cover;
+    background-repeat: no-repeat;
+}
