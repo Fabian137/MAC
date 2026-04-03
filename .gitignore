@@ -18,6 +18,9 @@ __pycache__/
 .obsidian/workspace.json
 .obsidian/graph.json
 
+# --- Quarto ---
+*.qmd
+
 # --- OS ---
 .DS_Store
 Thumbs.db
