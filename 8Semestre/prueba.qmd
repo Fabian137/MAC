@@ -1,0 +1,195 @@
+---
+title: "Apuntes de Análisis de Fourier"
+author: "C. Fabian B."
+date: "02-04-2026"
+format:
+  pdf:
+    documentclass: book
+    geometry: "margin=1in"
+    number-sections: true
+    toc: true
+    include-in-header:
+      text: |
+        \usepackage{tikz}
+        \usepackage{pgfplots}
+        \pgfplotsset{compat=1.18}
+        \usetikzlibrary{arrows.meta, angles, quotes, decorations.pathreplacing}
+lang: es
+jupyter: python3
+---
+
+# Unidad 1: Funciones Periódicas
+
+## Definición
+::: {.callout-note appearance="simple" icon=false}
+::: {#def-periodicidad name="Definición de periodicidad"}
+Sea $f : \mathbb{R} \to \mathbb{R}$ una función. Decimos que $f$ es periódica si $\exists T \in \mathbb{R}_{+}$ tal que $f(t+T) = f(t), \forall t \in \mathbb{R}$.
+:::
+:::
+
+#### Propiedades del sen y cos
+
+::: {.callout-tip title="Recordamos algunas propiedades"}
+
+1) $\sin(A\pm B) = \sin(A) \cos(B) \pm \cos(A) \sin(B)$
+2) $\cos(A\pm B) =\cos(A)\cos(B) \pm \sin(A)\sin(B)$
+:::
+
+### Ejemplitos
+
+Las siguientes funciones son peridódicas:
+
+- $f(t) = sen(t)$
+
+Asi, tomamos $T=2\pi \: \in \mathbb{R}_{+}$, tenemos que
+$$\begin{align*}
+f(t+T) &= f(t+2\pi) \;\;\; &\text{por def. de }T\\
+&=\sin(t+2\pi) \;\;\; &\text{por def. de }f\\
+&=\sin(t)\cos(2\pi) + \cos(t)\sin(2\pi)    & \text{por pro. del } \sin \\
+&=\sin(t) \cdot 1 + \cos(t)\cdot 0 
+\end{align*}
+$$
+
+- $f(t) = \cos(5t)$
+
+Consideramos $T=2\pi \: \in \mathbb{R}_{+}$. Asi
+$$\begin{align*}
+f(t+T) &= \cos (5(t+T)) & \text{por def. de } f\\
+&= \cos(5(t+2\pi)) & \text{por def. de }T\\
+&=\cos (5t + 10\pi) &\text{distribucion, algebra}\\
+&= \cos(5t)\cos(10\pi) - \sin(5t)\sin(10\pi)\\
+& (\cos(10\pi)) = 1 \implies &\cos(5t)(1) - \sin(5t)(0)\\
+&=\cos(5t) &\text{ pues } \cos(10\pi) = 1 \; y \; \sin(10\pi) = 0\\
+&= f(t) &\text{ por def de } f\\
+& \therefore f(t+T) = f(t),  &\text{con } T=2\pi \text{, i.e., } f \text{ es peri\'odica} 
+\end{align*}
+$$
+
+*no olvidar que T debe ser positiva*
+
+::: {.callout-caution title="Nota"}
+¿Qué es un ángulo?
+*Longitud de un arco en un círculo de radio 1. Lo demás es una reescalacion o la congruencia.*
+:::
+
+<!-- ```{=latex} -->
+\begin{center}
+\begin{tikzpicture}[scale=1.8]
+  % TODO: completar etiquetas, anotación del arco y del radio
+  \draw[->, gray!70] (-1.4,0) -- (1.4,0) node[right] {$x$};
+  \draw[->, gray!70] (0,-1.4) -- (0,1.5) node[above] {$y$};
+  \draw[thick] (0,0) circle (1);
+  \draw[thick, blue!70, -{Stealth}] (1,0) arc (0:55:1)
+        node[midway, right=3pt] {$\theta$};
+  \draw[thick, red!70] (0,0) -- (55:1) node[midway, above left] {$1$};
+  \fill (1,0) circle (1.2pt) node[below right, font=\small] {$(1,0)$};
+  \fill (55:1) circle (1.2pt);
+  \node[gray!60, font=\small\itshape] at (0,-1.65)
+        {Placeholder: longitud de arco $= \theta$ en el círculo unitario};
+\end{tikzpicture}
+\end{center}
+<!-- ``` -->
+
+- $f(t) = 2$
+
+Consideramos $T = \sqrt{ 2 } \in \mathbb{R}_{+}$. Así
+$$
+\begin{align*}
+f(t+T) &= f(t + \sqrt{ 2 }) & \text{por def. de }T\\
+&= 2 & \text{def. de } f \text{  REVISAR si es 2 o -2 }\\
+&=f(t) & \text{def de } f\\
+&\therefore f(t +T ) = f(t) & \text{ con } T=\sqrt{ 2 } \text{ i.e., }f \text{ es periódica} 
+\end{align*}
+$$
+
+::: {#thm-Teorema-1 name="Teorema 1"}
+Sean $f:\mathbb{R} \to \mathbb{R}$ y $T \in \mathbb{R}_{+}$, con $f(t+T) = f(t), \; \forall \: t\in \mathbb{R}$ se cumple que
+$$\forall \: n \in \mathbb{Z} : \: f(t+nT) = f(t)$$
+
+O sea, si $f$ es periódica con periodo $T$, entonces $f$ es periódica con periodo $nT, \; \forall n \in \mathbb{Z}$.
+:::
+
+::: {.proof}
+
+::: {.callout-note appearance="simple" icon=false}
+Como $\mathbb{Z}$ tiene cardinalidad $\aleph_{0}$, o la de los naturales, podemos hacer inducción partiendo a $\mathbb{Z}$ en tres. O bien podríamos hacer solo un caso y después justificar unicidad de los sitemas de peano
+:::
+
+Como $\mathbb{Z} = \mathbb{N} \cup \{0\} \cup \mathbb{N}_{-}$, con $\mathbb{N}_{-} = \{-n \; : \; n \in \mathbb{N}\}$ y la unión es disjunta.
+
+1. Caso: $n \in \mathbb{N}$
+
+En este caso haremos inducción matemática sobre $n$, i.e.,
+P.D: $\forall \; n\in \mathbb{N} : \; f(t+nT) =f(t), \; \forall t \in \mathbb{R}$
+
+::: {.callout-tip title="Pregunta"}
+[^2] Inducción débil es equivalente a inducción fuerte y a un buen orden, ¿cómo equivalente?
+:::
+
+[^1]:
+
+[^2]:
+
+###### Caso base $n=1$
+
+Sea $f:\mathbb{R}\to \mathbb{R}$ una función periódica. Definimos el **periodo fundamental** (o simplemente el periodo) de $f$ como el mínimo periodo positivo, es decir:
+
+$$P=\min\{T\in\mathbb{R}_{+}:f(t+T)=f(t),\;\forall t\in\mathbb{R}\}.$$
+
+El conjunto de periodos positivos es un subconjunto de $\mathbb{R}$ acotado inferiormente (por 0). El mínimo podría no existir. Si no existe, decimos que $f$ no tiene periodo fundamental.
+:::
+
+------
+
+
+## Ejemplo de Serie de Fourier
+
+Determina la serie de Fourier para la función cuya expresión analítica es:
+$$
+f(x)=\begin{cases}
+x+1, \; \text{ si } \; x \in [-2 ,0]  \\
+-x+1, \; \text{ si } \; x \in [0,2]
+\end{cases}
+$$
+Con $f(x+4) = f(x), \; \forall \:x \in \mathbb{R}$.
+
+### Gráfica de la forma de onda
+
+Aquí es donde entra el código de Python. Este bloque se ejecutará e insertará la gráfica automáticamente en tu PDF:
+
+```{python}
+#| label: fig-onda
+#| fig-cap: "Forma de onda de un solo periodo de f(x)"
+#| echo: false
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Crear los intervalos
+x1 = np.linspace(-2, 0, 100)
+y1 = x1 + 1
+
+x2 = np.linspace(0, 2, 100)
+y2 = -x2 + 1
+
+# Graficar
+plt.figure(figsize=(6, 4))
+plt.plot(x1, y1, 'b-', linewidth=2, label='$f(x) = x+1$')
+plt.plot(x2, y2, 'g-', linewidth=2, label='$f(x) = -x+1$')
+
+plt.axhline(0, color='black', linewidth=0.5)
+plt.axvline(0, color='black', linewidth=0.5)
+plt.grid(color='gray', linestyle='--', linewidth=0.5)
+plt.legend()
+plt.title("Función a trozos en el intervalo [-2, 2]")
+
+plt.show()
+```
+
+
+::: {#thm-error-minimo name="Error Cuadrático Mínimo"}
+Si $f: \mathbb{R} \to \mathbb{R}$ es una función con periodo $P$, y $S_{k}(t)$ es la suma de Fourier asociada, entonces
+$$
+E_{k} \;\; \text{es el mínimo error cuadrático medio}
+$$
+:::

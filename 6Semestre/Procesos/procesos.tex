@@ -1,0 +1,186 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+% \usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+
+\title{Procesos Estocásticos}
+\author{Tarea 2 - C. Fabián Beltrán I. }
+    % \date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Introduction}
+
+
+\noindent
+81. Sea \(N = \{N_t : t \ge 0\}\) un proceso Poisson con parámetro \(\lambda = 15\).
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{a) } \(P(N_6 = 9)\)
+
+Como se nos está pidiendo que la v.a. sea igual a un valor dado, usamos la función de masa de probabilidad, i.e.,
+\[
+f(x) = \frac{\lambda^x e^{-\lambda}}{x!}
+\]
+\[
+\Rightarrow P(N_t = k) = \frac{(15t)^k e^{-15t}}{k!}
+\]
+Número de eventos en un intervalo de tiempo de longitud \(t\) (\(N_t\))
+\[
+\lambda = 15t
+\]
+Para a) tenemos que
+\[
+P(N_6 = 9) = \frac{(15 \cdot 6)^9 e^{-15 \cdot 6}}{9!}
+\]
+\[
+= \frac{90^9 e^{-90}}{9!} = \frac{7473389062500}{7 \cdot 9!} \quad \text{resultado de la calculadora Wolfram Alpha}
+\]
+
+\vspace{0.3cm}
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{b) } \(P(N_6 = 9, N_{20} = 13, N_{56} = 27)\)
+
+\noindent
+Esto es un evento conjunto en diferentes momentos. Podemos pensar que los intervalos de tiempo serán de la siguiente forma:
+
+\begin{align*}
+    &[0, 6] - \text{Ocurren 9 eventos en ese intervalo.}\\
+    &(6, 20] - \text{ Deben ocurrir } (13-9=4) \text{ eventos}\\
+    &(20, 56] - \text{ Ocurren } (27-13=14) \text{ eventos en el intervalo dado, con una longitud de } 36 \\
+\end{align*}
+
+\vspace{0.3cm}
+
+Con lo anterior reescribimos la probabilidad conjunta como:
+\[
+P(N_6 = 9, N_{20} = 13, N_{56} = 27) = P(N_6 = 9) \cdot P(N_{14} = 4) \cdot P(N_{36} = 14)
+\]
+y ya que los incrementos de un proceso Poisson son independientes (no ocurren al mismo tiempo), la probabilidad conjunta es solo la multiplicación de cada incremento.
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{c) } \(P(N_{20} = 13 \mid N_6 = 9)\)
+
+\[
+P(A \mid B) = \frac{P(A \cap B)}{P(B)} = \frac{P(A) \cdot P(B)}{P(B)} = P(A)
+\]
+Si los eventos son de incrementos independientes. Como los eventos de un proceso Poisson son independientes:
+\[
+= \frac{P(N_6 = 9, N_{20} = 13)}{P(N_6 = 9)} = \frac{P(N_6 = 9) \cdot P(N_{14} = 4)}{P(N_6 = 9)}
+\]
+\[
+= P(N_{14} = 4) = \frac{e^{-(15 \cdot 14)} (15 \cdot 14)^4}{4!}
+\]
+
+\vspace{0.3cm}
+
+\noindent
+\textbf{d) } \(P(N_6 = 9 \mid N_{20} = 13)\)
+
+El problema se podría entender o interpretar como, la probab. de que ocurran 9 eventos hasta el tiempo 6, dado que ocurran 13 eventos en el tiempo 20, o preguntarnos si nuestra perspectiva de que ocurran 13 eventos hasta el intervalo de tiempo $20, \; (N_{20}=13)$ cambia al saber que ya ocurrieron 9 eventos en hasta el tiempo 6 ($N_6=9$). Con lo anterior vemos que no son eventos independientes asi que no podríamos tener que 
+\[
+P(N_6 = 9 | N_{20} = 13) = P(N_{20}=13)
+\]
+
+Asi que en este caso usaremos el Teo. de Bayes
+\[
+P(N_6=9 | N_{20}) = \frac{P(N_{20} = 13 | N_6=9) P(N_6=9)  }{P(N_{20} = 13)}
+\]
+Los cuales ya conocemos algunos, asi que tenemos:
+
+\[
+P(N_6 = 9 | N_{20} = 13) = \frac{ \left( \frac{e^{-(15 \cdot 14)} (15 \cdot 14)^4}{4!} \right) \cdot \left( \frac{(15 \cdot 6)^9 e^{-15 \cdot 6}}{9!} \right) }{ \frac{e^{-300} 300^{13}  }{13!}}
+\]
+
+
+
+
+\newpage
+
+\section*{(8.2) Proceso de Poisson con tasa $\lambda = 2$}
+
+Sea \( N = \{N_t : t \geq 0\} \) un proceso de Poisson con tasa \( \lambda = 2 \).
+
+\subsection*{(a) Cálculo de \( \mathbb{E}[N_t] \) y \( \text{Var}(N_t) \)}
+
+Para un proceso de Poisson, el número de eventos en un intervalo de longitud \(t\) sigue una distribución de Poisson con parámetro \(\lambda t\). Es decir,
+\[
+N_t \sim \text{Poisson}(\lambda t) = \text{Poisson}(2t).
+\]
+Por las propiedades de la distribución de Poisson, la media y la varianza son iguales al parámetro \(\lambda t\). Por lo tanto,
+\[
+\mathbb{E}[N_t] = \lambda t = 2t,
+\]
+\[
+\text{Var}(N_t) = \lambda t = 2t.
+\]
+
+\subsection*{(b) Cálculo de \( \mathbb{E}[N_{t+s} \mid N_t] \)}
+
+Para calcular la esperanza condicional de \(N_{t+s}\) dado \(N_t\), descomponemos \(N_{t+s}\) como la suma de los eventos hasta el tiempo \(t\) más los eventos en el intervalo \((t, t+s]\):
+\[
+N_{t+s} = N_t + (N_{t+s} - N_t).
+\]
+
+Por la propiedad de incrementos independientes del proceso de Poisson, el incremento \(N_{t+s} - N_t\) es independiente de \(N_t\) y se distribuye como \(\text{Poisson}(\lambda s) = \text{Poisson}(2s)\).
+
+Aplicando la esperanza condicional y usando la linealidad:
+\[
+\mathbb{E}[N_{t+s} \mid N_t] = \mathbb{E}[N_t + (N_{t+s} - N_t) \mid N_t]
+\]
+\[
+= \mathbb{E}[N_t \mid N_t] + \mathbb{E}[N_{t+s} - N_t \mid N_t].
+\]
+
+El primer término es simplemente \(N_t\), ya que es conocido bajo la condición. El segundo término, por independencia, es igual a la esperanza no condicional del incremento:
+\[
+\mathbb{E}[N_{t+s} - N_t \mid N_t] = \mathbb{E}[N_{t+s} - N_t] = \lambda s = 2s.
+\]
+
+Por lo tanto,
+\[
+\mathbb{E}[N_{t+s} \mid N_t] = N_t + 2s.
+\]
+
+\newpage
+
+\section*{(8.6) Red de tráfico}
+
+Las entradas a la red son procesos de Poisson independientes con las tasas indicadas:
+\[
+\lambda_1 = 30,\qquad \lambda_2 = 60,\qquad \lambda_3 = 30.
+\]
+En cada bifurcación, un vehículo elige una dirección con la probabilidad fija escrita sobre cada flecha. Hay que describir el flujo de tráfico (i.e., la tasa del proceso de Poisson) en cada rama de la red.
+
+\subsection*{Propuesta}
+
+\begin{align*}
+\text{Desde entrada 1 }(\lambda_1 = 30): &\quad 
+\begin{cases}
+\text{Rama \(A_1\) (probabilidad 0.3):} & 30 \times 0.3 = 9 \\
+\text{Rama \(B_1\) (probabilidad 0.7):} & 30 \times 0.7 = 21
+\end{cases} \\
+\text{Desde entrada 2 }(\lambda_2 = 60): &\quad 
+\begin{cases}
+\text{Rama \(A_2\) (probabilidad 0.6):} & 60 \times 0.6 = 36 \\
+\text{Rama \(B_2\) (probabilidad 0.4):} & 60 \times 0.4 = 24
+\end{cases} \\
+\text{Desde entrada 3 }(\lambda_3 = 30): &\quad 
+\begin{cases}
+\text{Rama \(A_3\) (probabilidad 0.5):} & 30 \times 0.5 = 15 \\
+\text{Rama \(B_3\) (probabilidad 0.5):} & 30 \times 0.5 = 15
+\end{cases}
+\end{align*}
+\end{document}

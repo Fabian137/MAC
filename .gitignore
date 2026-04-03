@@ -1,0 +1,38 @@
+# --- Python ---
+venv/
+__pycache__/
+*.py[cod]
+
+# --- LaTeX ---
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.synctex.gz
+*.toc
+*.out
+
+*.pdf
+
+# --- Obsidian ---
+.obsidian/workspace.json
+.obsidian/graph.json
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+
+
+# Temporales de Quarto (archivos ipynb con números al final)
+*.quarto_ipynb*
+
+# Archivos de intercambio de editores (como Kate o Vim)
+*.kate-swp
+.*.swp
+
+# Archivos auxiliares de LaTeX (vistos en tu imagen anterior)
+*.fdb_latexmk
+
+# Directorios de renderizado de Quarto
+*_files/
+.quarto/
